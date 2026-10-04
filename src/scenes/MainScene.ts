@@ -10,7 +10,7 @@ import {
   RAFT,
   STICK_FIGURE,
 } from '../config';
-import { LEVELS, type Level } from '../levels';
+import { LEVEL_KEY, LEVELS, type Level } from '../levels';
 import { figureTouches } from '../logic/collect';
 import {
   findRope,
@@ -32,9 +32,6 @@ import { drawItem, drawItemOutline } from '../objects/Item';
 import { addRaft } from '../objects/Raft';
 import { addRestartButton } from '../objects/RestartButton';
 import { StickFigure } from '../objects/StickFigure';
-
-/** The game remembers the current level here while the scene restarts. */
-const LEVEL_KEY = 'level';
 
 type ItemState = 'floating' | 'collected' | 'given';
 
