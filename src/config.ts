@@ -39,5 +39,17 @@ export const STICK_FIGURE = {
 export const DRAWING = {
   lineWidth: 4,
   color: 0x000000,
+  eraserWidth: 28,
   minStep: 2, // pixels the mouse must move before a new piece of line is drawn
+} as const;
+
+/** The pencil and eraser buttons in the top left corner. */
+export const TOOL_BUTTONS = {
+  size: 48,
+  margin: 12, // gap from the screen edge and between the buttons
+  background: 0xeeeeee,
+  selectedFrame: 0x2196f3,
+  frameWidth: 4,
+  pencilColor: 0x000000,
+  eraserColor: 0xf48fb1,
 } as const;

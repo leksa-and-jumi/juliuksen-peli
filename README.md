@@ -10,6 +10,10 @@
 
 ## How to play / Miten pelataan
 
+🇬🇧 Draw with the mouse ✏️. The buttons in the top left corner switch between the pencil ⚫ and the eraser 🩷.
+
+🇫🇮 Piirrä hiirellä ✏️. Vasemman yläkulman napeista vaihdat kynän ⚫ ja kumin 🩷.
+
 _🇬🇧 The game is just starting. Julius decides what comes next!_
 _🇫🇮 Peli on vasta alussa. Julius päättää, mitä siihen tulee!_
 
