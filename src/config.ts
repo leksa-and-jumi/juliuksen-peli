@@ -95,3 +95,10 @@ export const HAT_SLOT = {
   outlineWidth: 2,
   flyTime: 600, // milliseconds for the hat to fly up into the picture
 } as const;
+
+/** The other stick figure waiting on the upper raft. Bring it the hat! */
+export const FRIEND = {
+  raftIndex: 1, // the upper right raft
+  offsetX: 60, // pixels right of the raft's middle
+  giveTime: 800, // milliseconds for the hat to fly onto its head
+} as const;

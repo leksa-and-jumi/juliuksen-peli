@@ -75,3 +75,8 @@ export function landingSpot(end: Point, rafts: readonly RaftTop[], snap: number)
   }
   return null;
 }
+
+/** True when the feet are standing on top of the raft. */
+export function standsOn(feet: Point, raft: RaftTop): boolean {
+  return feet.y === raft.y && feet.x >= raft.left && feet.x <= raft.right;
+}

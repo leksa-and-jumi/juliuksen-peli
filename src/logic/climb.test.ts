@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { findRope, landingSpot, pointAlongPath } from './climb';
+import { findRope, landingSpot, pointAlongPath, standsOn } from './climb';
 
 const feet = { x: 100, y: 500 };
 // A rope drawn from the figure's chest up to the right.
@@ -56,5 +56,18 @@ describe('landingSpot', () => {
 
   it('keeps hanging when no raft is near', () => {
     expect(landingSpot({ x: 200, y: 300 }, rafts, 40)).toBeNull();
+  });
+});
+
+describe('standsOn', () => {
+  const raft = { left: 500, right: 700, y: 176 };
+
+  it('knows when the figure is on the raft', () => {
+    expect(standsOn({ x: 550, y: 176 }, raft)).toBe(true);
+  });
+
+  it('knows when the figure is somewhere else', () => {
+    expect(standsOn({ x: 550, y: 300 }, raft)).toBe(false);
+    expect(standsOn({ x: 300, y: 176 }, raft)).toBe(false);
   });
 });
