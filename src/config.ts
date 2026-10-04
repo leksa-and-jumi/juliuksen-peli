@@ -62,33 +62,49 @@ export const RESTART_BUTTON = {
   arrowHeadSize: 8,
 } as const;
 
-/** How the hat looks. Where it floats is set in each level. */
-export const HAT = {
-  brimWidth: 34,
-  brimHeight: 5,
-  crownWidth: 22,
-  crownHeight: 22,
-  bandHeight: 5,
-  color: 0x000000,
-  band: 0xe53935,
+/**
+ * The things to collect. Every level has its own thing.
+ * Sizes are in pixels, colors are main + accent (band, jewel...).
+ */
+export const ITEMS = {
+  hat: {
+    width: 34, // the brim
+    height: 27,
+    brimHeight: 5,
+    crownWidth: 22,
+    bandHeight: 5,
+    color: 0x000000,
+    accent: 0xe53935,
+  },
+  crown: {
+    width: 34,
+    height: 26,
+    bandHeight: 7,
+    color: 0xfdd835,
+    accent: 0xe53935,
+  },
+} as const;
+
+/** Rules shared by every thing to collect. */
+export const ITEM = {
   reach: 20, // how close (left/right) the figure must come to grab it
 } as const;
 
-/** The colorless hat picture at the top. A collected hat flies into it. */
-export const HAT_SLOT = {
+/** The colorless picture at the top. A collected thing flies into it. */
+export const ITEM_SLOT = {
   x: GAME_WIDTH / 2,
   y: 50, // the bottom of the brim
   outline: 0xbdbdbd,
   outlineWidth: 2,
-  flyTime: 600, // milliseconds for the hat to fly up into the picture
+  flyTime: 600, // milliseconds for the thing to fly up into the picture
 } as const;
 
-/** The other stick figure waiting for the hat. Where it stands is set in each level. */
+/** The other stick figure waiting for the thing. Where it stands is set in each level. */
 export const FRIEND = {
-  giveTime: 800, // milliseconds for the hat to fly onto its head
+  giveTime: 800, // milliseconds for the thing to fly onto its head
 } as const;
 
-/** Fireworks when a round is done (the friend has put on the hat). */
+/** Fireworks when a round is done (the friend has got the thing). */
 export const FIREWORKS = {
   bursts: 30,
   burstInterval: 180, // milliseconds between bursts
