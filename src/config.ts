@@ -25,3 +25,12 @@ export const RAFT_PLACES = [
   { offsetX: -150, bottomMargin: 70 },
   { offsetX: 250, bottomMargin: 400 },
 ] as const;
+
+/** Julius's stick figure. Sizes are in pixels. */
+export const STICK_FIGURE = {
+  height: 90, // from feet to top of head
+  headRadius: 12,
+  lineWidth: 4,
+  color: 0x000000,
+  raftIndex: 0, // which raft it stands on (0 = the lower left raft)
+} as const;

@@ -34,3 +34,15 @@ export function raftPlanks(
     height: raft.height,
   }));
 }
+
+/** The middle point of the raft's top edge, where things can stand. */
+export function raftTopCenter(
+  gameWidth: number,
+  gameHeight: number,
+  raft: { height: number; bottomMargin: number; offsetX: number },
+): { x: number; y: number } {
+  return {
+    x: gameWidth / 2 + raft.offsetX,
+    y: gameHeight - raft.bottomMargin - raft.height,
+  };
+}
