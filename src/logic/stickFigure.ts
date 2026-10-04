@@ -16,12 +16,13 @@ export interface StickFigureShape {
 /**
  * Builds a standing stick figure whose feet touch `feet`.
  * Proportions: legs take the lower 40 %, the body above them,
- * and the head sits on top.
+ * and the head sits on top. When climbing, the arms reach up.
  */
 export function stickFigureShape(
   feet: Point,
   height: number,
   headRadius: number,
+  pose: 'stand' | 'climb' = 'stand',
 ): StickFigureShape {
   if (height <= headRadius * 2) {
     throw new RangeError(`height (${height}) must be bigger than the head (${headRadius * 2})`);
@@ -32,7 +33,7 @@ export function stickFigureShape(
   const shoulder = neck + (hip - neck) * 0.25;
   const legSpread = height * 0.15;
   const armSpread = height * 0.2;
-  const armDrop = height * 0.2;
+  const armDrop = pose === 'climb' ? -height * 0.25 : height * 0.2;
 
   return {
     head: { x, y: feet.y - height + headRadius, radius: headRadius },

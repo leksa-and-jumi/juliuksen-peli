@@ -12,7 +12,11 @@
 
 🇬🇧 Draw with the mouse ✏️. The buttons in the top left corner switch between the pencil ⚫ and the eraser 🩷.
 
+🇬🇧 Draw a rope 🪢 from the stick figure up to the high raft, and the stick figure climbs it!
+
 🇫🇮 Piirrä hiirellä ✏️. Vasemman yläkulman napeista vaihdat kynän ⚫ ja kumin 🩷.
+
+🇫🇮 Piirrä köysi 🪢 tikku-ukolta ylälautalle, niin tikku-ukko kiipeää sitä pitkin!
 
 _🇬🇧 The game is just starting. Julius decides what comes next!_
 _🇫🇮 Peli on vasta alussa. Julius päättää, mitä siihen tulee!_

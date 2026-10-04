@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { DRAWING, GAME_HEIGHT, GAME_WIDTH, TOOL_BUTTONS } from '../config';
 import { isFarEnough } from '../logic/drawing';
 import type { Point } from '../logic/stickFigure';
+import { eraseStrokes, type Stroke } from '../logic/strokes';
 import { toolAt, toolButtons, type Tool, type ToolButton } from '../logic/tools';
 
 /**
@@ -9,8 +10,11 @@ import { toolAt, toolButtons, type Tool, type ToolButton } from '../logic/tools'
  * (or a finger) down and move. The buttons in the top left corner
  * switch between the pencil and the eraser. The eraser only
  * removes drawn lines, never the rafts or the stick figure.
+ *
+ * Returns a function that gives the finished lines, so the
+ * stick figure can climb them like ropes.
  */
-export function addDrawingPad(scene: Phaser.Scene): void {
+export function addDrawingPad(scene: Phaser.Scene): () => readonly Stroke[] {
   const canvas = scene.add.renderTexture(0, 0, GAME_WIDTH, GAME_HEIGHT).setOrigin(0, 0);
   // An off-screen brush: each piece of line is drawn here first,
   // then copied onto (or erased from) the canvas.
@@ -20,6 +24,8 @@ export function addDrawingPad(scene: Phaser.Scene): void {
 
   let tool: Tool = 'pencil';
   let last: Point | null = null;
+  let strokes: Stroke[] = [];
+  let current: Stroke = [];
 
   const paint = (from: Point, to: Point): void => {
     const width = tool === 'eraser' ? DRAWING.eraserWidth : DRAWING.lineWidth;
@@ -32,7 +38,9 @@ export function addDrawingPad(scene: Phaser.Scene): void {
     brush.fillCircle(to.x, to.y, width / 2);
     if (tool === 'eraser') {
       canvas.erase(brush);
+      strokes = eraseStrokes(strokes, to, width / 2);
     } else {
+      current.push(to);
       canvas.draw(brush);
     }
     canvas.render();
@@ -54,6 +62,7 @@ export function addDrawingPad(scene: Phaser.Scene): void {
       return;
     }
     last = point;
+    current = [];
     paint(point, point);
   });
 
@@ -66,12 +75,15 @@ export function addDrawingPad(scene: Phaser.Scene): void {
   });
 
   const stop = (): void => {
+    if (current.length >= 2) strokes.push(current);
+    current = [];
     last = null;
   };
   scene.input.on('pointerup', stop);
   scene.input.on('pointerupoutside', stop);
 
   drawButtons();
+  return () => strokes;
 }
 
 /** A pencil button shows a black dot, the eraser button a pink block. */
