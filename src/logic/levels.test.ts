@@ -19,13 +19,13 @@ describe('nextLevel', () => {
 
 describe('LEVELS', () => {
   it.each(LEVELS.map((level, i) => [i + 1, level] as const))(
-    'level %i points to rafts that exist and keeps the hat on screen',
+    'level %i points to rafts that exist and keeps the thing on screen',
     (_n, level) => {
       expect(level.rafts[level.startRaft]).toBeDefined();
       expect(level.rafts[level.friendRaft]).toBeDefined();
       expect(level.startRaft).not.toBe(level.friendRaft);
-      expect(level.hat.x).toBeGreaterThan(0);
-      expect(level.hat.x).toBeLessThan(GAME_WIDTH);
+      expect(level.item.x).toBeGreaterThan(0);
+      expect(level.item.x).toBeLessThan(GAME_WIDTH);
     },
   );
 });
