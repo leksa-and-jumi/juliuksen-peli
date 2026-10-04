@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import {
   CLIMB,
+  FRIEND,
   GAME_HEIGHT,
   GAME_WIDTH,
   HAT,
@@ -10,9 +11,9 @@ import {
   STICK_FIGURE,
 } from '../config';
 import { figureTouches } from '../logic/collect';
-import { findRope, landingSpot, pointAlongPath, type RaftTop } from '../logic/climb';
+import { findRope, landingSpot, pointAlongPath, standsOn, type RaftTop } from '../logic/climb';
 import { raftTopCenter } from '../logic/raft';
-import type { Point } from '../logic/stickFigure';
+import { stickFigureShape, type Point } from '../logic/stickFigure';
 import type { Stroke } from '../logic/strokes';
 import { addDrawingPad } from '../objects/DrawingPad';
 import { drawHat, drawHatOutline } from '../objects/Hat';
@@ -20,13 +21,16 @@ import { addRaft } from '../objects/Raft';
 import { addRestartButton } from '../objects/RestartButton';
 import { StickFigure } from '../objects/StickFigure';
 
+type HatState = 'floating' | 'collected' | 'given';
+
 type FigureState = { mode: 'stand' } | { mode: 'climb'; path: Point[]; distance: number };
 
 /**
  * The game screen. Draw a rope that touches the stick figure and
  * goes up: the figure climbs it, and steps onto a raft at the top.
  * A hat floats along the way: touch it and it flies into the
- * colorless hat picture at the top.
+ * colorless hat picture at the top. Bring it to the friend on the
+ * upper raft, and the friend puts the hat on.
  */
 export class MainScene extends Phaser.Scene {
   private figure!: StickFigure;
@@ -34,7 +38,8 @@ export class MainScene extends Phaser.Scene {
   private raftTops: RaftTop[] = [];
   private state: FigureState = { mode: 'stand' };
   private hat!: Phaser.GameObjects.Graphics;
-  private hatCollected = false;
+  private hatState: HatState = 'floating';
+  private friendHatSpot: Point = { x: 0, y: 0 };
 
   constructor() {
     super('MainScene');
@@ -54,10 +59,18 @@ export class MainScene extends Phaser.Scene {
     );
     this.state = { mode: 'stand' };
 
+    const friendRaft = RAFT_PLACES[FRIEND.raftIndex];
+    const friendRaftTop = raftTopCenter(GAME_WIDTH, GAME_HEIGHT, { ...RAFT, ...friendRaft });
+    const friendFeet = { x: friendRaftTop.x + FRIEND.offsetX, y: friendRaftTop.y };
+    new StickFigure(this, friendFeet);
+    // The hat's brim sits a little below the top of the friend's head.
+    const { head } = stickFigureShape(friendFeet, STICK_FIGURE.height, STICK_FIGURE.headRadius);
+    this.friendHatSpot = { x: head.x, y: head.y - head.radius / 2 };
+
     drawHatOutline(this.add.graphics(), HAT_SLOT.x, HAT_SLOT.y);
     this.hat = this.add.graphics();
     drawHat(this.hat, HAT.x, HAT.y);
-    this.hatCollected = false;
+    this.hatState = 'floating';
 
     this.strokes = addDrawingPad(this);
     addRestartButton(this);
@@ -66,23 +79,35 @@ export class MainScene extends Phaser.Scene {
   update(_time: number, delta: number): void {
     this.moveFigure(delta);
     this.collectHat();
+    this.giveHat();
+  }
+
+  private giveHat(): void {
+    if (this.hatState !== 'collected' || this.state.mode !== 'stand') return;
+    const friendRaft = this.raftTops[FRIEND.raftIndex];
+    if (!friendRaft || !standsOn(this.figure.feet, friendRaft)) return;
+    this.hatState = 'given';
+    this.flyHatTo(this.friendHatSpot, FRIEND.giveTime);
+  }
+
+  /** The hat is drawn at its starting spot, so it moves by the difference. */
+  private flyHatTo(spot: Point, duration: number): void {
+    this.tweens.add({
+      targets: this.hat,
+      x: spot.x - HAT.x,
+      y: spot.y - HAT.y,
+      duration,
+      ease: 'Quad.easeInOut',
+    });
   }
 
   private collectHat(): void {
-    if (this.hatCollected) return;
+    if (this.hatState !== 'floating') return;
     // The middle of the hat is what the figure has to touch.
     const hatMiddle = { x: HAT.x, y: HAT.y - HAT.crownHeight / 2 };
     if (figureTouches(this.figure.feet, STICK_FIGURE.height, HAT.reach, hatMiddle)) {
-      this.hatCollected = true;
-      // The hat is drawn at its starting spot, so moving the whole
-      // drawing by the difference puts it right on top of the picture.
-      this.tweens.add({
-        targets: this.hat,
-        x: HAT_SLOT.x - HAT.x,
-        y: HAT_SLOT.y - HAT.y,
-        duration: HAT_SLOT.flyTime,
-        ease: 'Quad.easeInOut',
-      });
+      this.hatState = 'collected';
+      this.flyHatTo(HAT_SLOT, HAT_SLOT.flyTime);
     }
   }
 
