@@ -3,9 +3,9 @@ import { GAME_WIDTH, RESTART_BUTTON } from '../config';
 
 /**
  * A button with a round arrow in the top right corner.
- * Pressing it starts the whole game over from the beginning.
+ * Pressing it calls `onPress`, which starts the whole game over.
  */
-export function addRestartButton(scene: Phaser.Scene): void {
+export function addRestartButton(scene: Phaser.Scene, onPress: () => void): void {
   const { size, margin, arrowRadius, arrowHeadSize } = RESTART_BUTTON;
   const left = GAME_WIDTH - margin - size;
   const centerX = left + size / 2;
@@ -39,5 +39,5 @@ export function addRestartButton(scene: Phaser.Scene): void {
     .zone(left, margin, size, size)
     .setOrigin(0, 0)
     .setInteractive({ useHandCursor: true })
-    .on('pointerdown', () => scene.scene.restart());
+    .on('pointerdown', onPress);
 }

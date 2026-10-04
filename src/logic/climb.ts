@@ -80,3 +80,8 @@ export function landingSpot(end: Point, rafts: readonly RaftTop[], snap: number)
 export function standsOn(feet: Point, raft: RaftTop): boolean {
   return feet.y === raft.y && feet.x >= raft.left && feet.x <= raft.right;
 }
+
+/** The middle of a raft's top, where a stick figure stands. */
+export function raftMiddle(raft: RaftTop): Point {
+  return { x: (raft.left + raft.right) / 2, y: raft.y };
+}

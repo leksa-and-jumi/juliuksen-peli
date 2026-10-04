@@ -57,6 +57,7 @@ Koska Julius on 7-vuotias: lyhyet lauseet, isot selkeät vaihtoehdot ja paljon k
 - ESLint (typescript-eslint strict) + Prettier. Vitest yksikkötesteille.
 - Rakenne:
   - `src/config.ts` – kaikki vakiot (koot, nopeudet, värit). Ei maagisia numeroita muualla.
+  - `src/levels.ts` – pelin tasot (lautat, hattu, tikku-ukkojen paikat). Uusi taso = uusi rivi listaan.
   - `src/scenes/` – Phaser-scenet.
   - `src/objects/` – pelihahmot ja -oliot.
   - `src/logic/` – puhdas pelilogiikka ilman Phaseria. **Jokaisella logiikkatiedostolla on testi** (`*.test.ts`).
