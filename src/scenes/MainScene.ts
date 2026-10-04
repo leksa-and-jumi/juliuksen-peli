@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { GAME_HEIGHT, GAME_WIDTH, RAFT, RAFT_PLACES, STICK_FIGURE } from '../config';
 import { raftTopCenter } from '../logic/raft';
+import { addDrawingPad } from '../objects/DrawingPad';
 import { addRaft } from '../objects/Raft';
 import { addStickFigure } from '../objects/StickFigure';
 
@@ -17,5 +18,7 @@ export class MainScene extends Phaser.Scene {
 
     const raft = RAFT_PLACES[STICK_FIGURE.raftIndex];
     addStickFigure(this, raftTopCenter(GAME_WIDTH, GAME_HEIGHT, { ...RAFT, ...raft }));
+
+    addDrawingPad(this);
   }
 }
