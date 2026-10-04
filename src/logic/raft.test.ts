@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { raftPlanks } from './raft';
+import { raftPlanks, raftTopCenter } from './raft';
 
 const raft = { width: 300, height: 20, bottomMargin: 50, offsetX: 0, plankCount: 3 };
 
@@ -24,5 +24,11 @@ describe('raftPlanks', () => {
 
   it('rejects zero planks', () => {
     expect(() => raftPlanks(800, 600, { ...raft, plankCount: 0 })).toThrow(RangeError);
+  });
+});
+
+describe('raftTopCenter', () => {
+  it('gives the middle of the top edge', () => {
+    expect(raftTopCenter(800, 600, { ...raft, offsetX: -150 })).toEqual({ x: 250, y: 530 });
   });
 });
