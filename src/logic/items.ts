@@ -1,6 +1,16 @@
 import type { Point } from './stickFigure';
 
-export type ItemKind = 'hat' | 'crown' | 'cap' | 'bow' | 'flower';
+export type ItemKind =
+  | 'hat'
+  | 'crown'
+  | 'cap'
+  | 'bow'
+  | 'flower'
+  | 'pipo'
+  | 'partyHat'
+  | 'wizardHat'
+  | 'vikingHelmet'
+  | 'star';
 
 /** One filled piece of a thing, as a closed polygon. */
 export interface ItemPart {
@@ -20,6 +30,18 @@ export interface ItemSizes {
   cap: { domeRadius: number; visorLength: number; visorHeight: number };
   bow: { width: number; height: number; knotSize: number };
   flower: { petalRadius: number; petalDistance: number; centerRadius: number };
+  pipo: { domeRadius: number; bandHeight: number; ballRadius: number };
+  partyHat: { width: number; height: number; ballRadius: number };
+  wizardHat: {
+    brimWidth: number;
+    brimHeight: number;
+    coneWidth: number;
+    coneHeight: number;
+    starOuter: number;
+    starInner: number;
+  };
+  vikingHelmet: { domeRadius: number; hornLength: number };
+  star: { outerRadius: number; innerRadius: number; centerRadius: number };
 }
 
 /** Points around a circle; enough of them to look round when small. */
@@ -39,6 +61,15 @@ function dome(cx: number, cy: number, r: number): Point[] {
   const steps = CIRCLE_POINTS / 2;
   return Array.from({ length: steps + 1 }, (_, i) => {
     const angle = Math.PI + (i / steps) * Math.PI;
+    return { x: cx + Math.cos(angle) * r, y: cy + Math.sin(angle) * r };
+  });
+}
+
+/** A five-pointed star with its top point straight up. */
+function starPoints(cx: number, cy: number, outer: number, inner: number): Point[] {
+  return Array.from({ length: 10 }, (_, i) => {
+    const angle = -Math.PI / 2 + (i / 10) * Math.PI * 2;
+    const r = i % 2 === 0 ? outer : inner;
     return { x: cx + Math.cos(angle) * r, y: cy + Math.sin(angle) * r };
   });
 }
@@ -140,6 +171,69 @@ function rawShape(kind: ItemKind, sizes: ItemSizes): ItemPart[] {
         };
       });
       return [...petals, { role: 'accent', points: circle(0, 0, f.centerRadius) }];
+    }
+    case 'pipo': {
+      const p = sizes.pipo;
+      const r = p.domeRadius;
+      return [
+        { role: 'main', points: dome(0, 0, r) },
+        { role: 'accent', points: rect(-r, -p.bandHeight, r * 2, p.bandHeight) },
+        { role: 'accent', points: circle(0, -r, p.ballRadius) },
+      ];
+    }
+    case 'partyHat': {
+      const p = sizes.partyHat;
+      return [
+        {
+          role: 'main',
+          points: [
+            { x: -p.width / 2, y: 0 },
+            { x: 0, y: -p.height },
+            { x: p.width / 2, y: 0 },
+          ],
+        },
+        { role: 'accent', points: circle(0, -p.height, p.ballRadius) },
+      ];
+    }
+    case 'wizardHat': {
+      const w = sizes.wizardHat;
+      return [
+        { role: 'main', points: rect(-w.brimWidth / 2, -w.brimHeight, w.brimWidth, w.brimHeight) },
+        {
+          role: 'main',
+          points: [
+            { x: -w.coneWidth / 2, y: -w.brimHeight },
+            { x: 0, y: -w.brimHeight - w.coneHeight },
+            { x: w.coneWidth / 2, y: -w.brimHeight },
+          ],
+        },
+        {
+          role: 'accent',
+          points: starPoints(0, -w.brimHeight - w.coneHeight / 3, w.starOuter, w.starInner),
+        },
+      ];
+    }
+    case 'vikingHelmet': {
+      const v = sizes.vikingHelmet;
+      const r = v.domeRadius;
+      // A horn starts at the side of the helmet and curls up and out.
+      const horn = (side: 1 | -1): Point[] => [
+        { x: side * (r - 1), y: -2 },
+        { x: side * (r - 4), y: -r / 2 - 2 },
+        { x: side * (r + v.hornLength / 2), y: -r - v.hornLength / 2 },
+      ];
+      return [
+        { role: 'accent', points: horn(-1) },
+        { role: 'accent', points: horn(1) },
+        { role: 'main', points: dome(0, 0, r) },
+      ];
+    }
+    case 'star': {
+      const st = sizes.star;
+      return [
+        { role: 'main', points: starPoints(0, 0, st.outerRadius, st.innerRadius) },
+        { role: 'accent', points: circle(0, 0, st.centerRadius) },
+      ];
     }
   }
 }
