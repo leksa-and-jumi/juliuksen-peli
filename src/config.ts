@@ -3,8 +3,8 @@ export const GAME_WIDTH = 800;
 export const GAME_HEIGHT = 600;
 
 export const COLORS = {
-  background: 0x1d1f2b,
-  text: '#ffffff',
+  background: 0xffffff,
+  text: '#000000',
 } as const;
 
 /** Every text in the game is shown in English and Finnish. */
