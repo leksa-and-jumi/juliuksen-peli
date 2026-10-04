@@ -1,12 +1,21 @@
 import Phaser from 'phaser';
-import { CLIMB, GAME_HEIGHT, HAT, GAME_WIDTH, RAFT, RAFT_PLACES, STICK_FIGURE } from '../config';
+import {
+  CLIMB,
+  GAME_HEIGHT,
+  GAME_WIDTH,
+  HAT,
+  HAT_SLOT,
+  RAFT,
+  RAFT_PLACES,
+  STICK_FIGURE,
+} from '../config';
 import { figureTouches } from '../logic/collect';
 import { findRope, landingSpot, pointAlongPath, type RaftTop } from '../logic/climb';
 import { raftTopCenter } from '../logic/raft';
 import type { Point } from '../logic/stickFigure';
 import type { Stroke } from '../logic/strokes';
 import { addDrawingPad } from '../objects/DrawingPad';
-import { drawHat } from '../objects/Hat';
+import { drawHat, drawHatOutline } from '../objects/Hat';
 import { addRaft } from '../objects/Raft';
 import { addRestartButton } from '../objects/RestartButton';
 import { StickFigure } from '../objects/StickFigure';
@@ -16,14 +25,16 @@ type FigureState = { mode: 'stand' } | { mode: 'climb'; path: Point[]; distance:
 /**
  * The game screen. Draw a rope that touches the stick figure and
  * goes up: the figure climbs it, and steps onto a raft at the top.
- * A hat floats along the way: touch it and the figure wears it.
+ * A hat floats along the way: touch it and it flies into the
+ * colorless hat picture at the top.
  */
 export class MainScene extends Phaser.Scene {
   private figure!: StickFigure;
   private strokes!: () => readonly Stroke[];
   private raftTops: RaftTop[] = [];
   private state: FigureState = { mode: 'stand' };
-  private hat: Phaser.GameObjects.Graphics | null = null;
+  private hat!: Phaser.GameObjects.Graphics;
+  private hatCollected = false;
 
   constructor() {
     super('MainScene');
@@ -43,8 +54,10 @@ export class MainScene extends Phaser.Scene {
     );
     this.state = { mode: 'stand' };
 
+    drawHatOutline(this.add.graphics(), HAT_SLOT.x, HAT_SLOT.y);
     this.hat = this.add.graphics();
     drawHat(this.hat, HAT.x, HAT.y);
+    this.hatCollected = false;
 
     this.strokes = addDrawingPad(this);
     addRestartButton(this);
@@ -56,13 +69,20 @@ export class MainScene extends Phaser.Scene {
   }
 
   private collectHat(): void {
-    if (!this.hat) return;
+    if (this.hatCollected) return;
     // The middle of the hat is what the figure has to touch.
     const hatMiddle = { x: HAT.x, y: HAT.y - HAT.crownHeight / 2 };
     if (figureTouches(this.figure.feet, STICK_FIGURE.height, HAT.reach, hatMiddle)) {
-      this.hat.destroy();
-      this.hat = null;
-      this.figure.putOnHat();
+      this.hatCollected = true;
+      // The hat is drawn at its starting spot, so moving the whole
+      // drawing by the difference puts it right on top of the picture.
+      this.tweens.add({
+        targets: this.hat,
+        x: HAT_SLOT.x - HAT.x,
+        y: HAT_SLOT.y - HAT.y,
+        duration: HAT_SLOT.flyTime,
+        ease: 'Quad.easeInOut',
+      });
     }
   }
 

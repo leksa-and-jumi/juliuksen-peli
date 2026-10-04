@@ -12,13 +12,13 @@
 
 🇬🇧 Draw with the mouse ✏️. The buttons in the top left corner switch between the pencil ⚫ and the eraser 🩷.
 
-🇬🇧 Draw a rope 🪢 from the stick figure up to the high raft, and the stick figure climbs it! Pick up the hat 🎩 on the way.
+🇬🇧 Draw a rope 🪢 from the stick figure up to the high raft, and the stick figure climbs it! Pick up the hat 🎩 on the way: it flies into the empty hat picture at the top.
 
 🇬🇧 The round arrow ↻ in the top right corner starts the game over.
 
 🇫🇮 Piirrä hiirellä ✏️. Vasemman yläkulman napeista vaihdat kynän ⚫ ja kumin 🩷.
 
-🇫🇮 Piirrä köysi 🪢 tikku-ukolta ylälautalle, niin tikku-ukko kiipeää sitä pitkin! Kerää matkalla hattu 🎩.
+🇫🇮 Piirrä köysi 🪢 tikku-ukolta ylälautalle, niin tikku-ukko kiipeää sitä pitkin! Kerää matkalla hattu 🎩: se lentää ylhäällä olevaan tyhjään hatun kuvaan.
 
 🇫🇮 Oikean yläkulman pyöreä nuoli ↻ aloittaa pelin alusta.
 
