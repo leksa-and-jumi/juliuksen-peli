@@ -14,9 +14,13 @@
 
 🇬🇧 Draw a rope 🪢 from the stick figure up to the high raft, and the stick figure climbs it!
 
+🇬🇧 The round arrow ↻ in the top right corner starts the game over.
+
 🇫🇮 Piirrä hiirellä ✏️. Vasemman yläkulman napeista vaihdat kynän ⚫ ja kumin 🩷.
 
 🇫🇮 Piirrä köysi 🪢 tikku-ukolta ylälautalle, niin tikku-ukko kiipeää sitä pitkin!
+
+🇫🇮 Oikean yläkulman pyöreä nuoli ↻ aloittaa pelin alusta.
 
 _🇬🇧 The game is just starting. Julius decides what comes next!_
 _🇫🇮 Peli on vasta alussa. Julius päättää, mitä siihen tulee!_

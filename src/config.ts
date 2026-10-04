@@ -61,3 +61,14 @@ export const CLIMB = {
   minRise: 30, // the rope's top must be at least this much higher than the feet
   landingSnap: 40, // how close to a raft the rope's top must be to step onto it
 } as const;
+
+/** The round arrow button in the top right corner that starts the game over. */
+export const RESTART_BUTTON = {
+  size: 48,
+  margin: 12, // gap from the screen edge
+  background: 0xeeeeee,
+  arrowColor: 0x000000,
+  arrowWidth: 4,
+  arrowRadius: 13,
+  arrowHeadSize: 8,
+} as const;
