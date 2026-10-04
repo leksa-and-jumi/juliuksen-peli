@@ -83,6 +83,27 @@ export const ITEMS = {
     color: 0xfdd835,
     accent: 0xe53935,
   },
+  cap: {
+    domeRadius: 13,
+    visorLength: 14, // how far the visor sticks out past the dome
+    visorHeight: 4,
+    color: 0xe53935,
+    accent: 0xb71c1c,
+  },
+  bow: {
+    width: 36,
+    height: 20,
+    knotSize: 8,
+    color: 0xec407a,
+    accent: 0xad1457,
+  },
+  flower: {
+    petalRadius: 7,
+    petalDistance: 8, // from the middle of the flower to the middle of a petal
+    centerRadius: 6,
+    color: 0xab47bc,
+    accent: 0xfdd835,
+  },
 } as const;
 
 /** Rules shared by every thing to collect. */

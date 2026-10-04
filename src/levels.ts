@@ -12,6 +12,9 @@ import type { ItemKind } from './logic/items';
  * item: the thing to collect on this level, and where it floats
  *   (x, and y = the bottom of the thing).
  */
+/** The game remembers the current level under this name while scenes restart. */
+export const LEVEL_KEY = 'level';
+
 export interface Level {
   rafts: readonly { offsetX: number; bottomMargin: number }[];
   startRaft: number;
@@ -41,5 +44,40 @@ export const LEVELS: readonly Level[] = [
     friendRaft: 1,
     friendOffsetX: -60,
     item: { kind: 'crown', x: 400, y: 280 },
+  },
+  {
+    // Level 3: straight up the middle. Collect a cap!
+    rafts: [
+      { offsetX: 0, bottomMargin: 70 },
+      { offsetX: 0, bottomMargin: 430 },
+    ],
+    startRaft: 0,
+    friendRaft: 1,
+    friendOffsetX: 70,
+    item: { kind: 'cap', x: 400, y: 330 },
+  },
+  {
+    // Level 4: three rafts like stairs. Collect a bow!
+    rafts: [
+      { offsetX: -250, bottomMargin: 70 },
+      { offsetX: 0, bottomMargin: 250 },
+      { offsetX: 250, bottomMargin: 430 },
+    ],
+    startRaft: 0,
+    friendRaft: 2,
+    friendOffsetX: 60,
+    item: { kind: 'bow', x: 475, y: 185 },
+  },
+  {
+    // Level 5: zigzag up. Collect a flower!
+    rafts: [
+      { offsetX: 250, bottomMargin: 70 },
+      { offsetX: -200, bottomMargin: 260 },
+      { offsetX: 200, bottomMargin: 450 },
+    ],
+    startRaft: 0,
+    friendRaft: 2,
+    friendOffsetX: 60,
+    item: { kind: 'flower', x: 475, y: 400 },
   },
 ];
