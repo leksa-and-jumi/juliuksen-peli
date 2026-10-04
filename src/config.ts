@@ -141,6 +141,31 @@ export const ITEMS = {
     color: 0xffc107,
     accent: 0xff8f00,
   },
+  // Jewelry 💎
+  necklace: {
+    radius: 11, // how wide the string of beads hangs
+    beads: 9,
+    beadRadius: 3,
+    pendantRadius: 5, // the gem hanging in the middle
+    color: 0xffb300,
+    accent: 0xd81b60,
+  },
+  ring: {
+    outerRadius: 9,
+    innerRadius: 6,
+    gemSize: 5, // half the height of the diamond on top
+    color: 0xffb300,
+    accent: 0x29b6f6,
+  },
+  tiara: {
+    width: 32,
+    bandHeight: 5,
+    spikes: 5,
+    spikeHeight: 9,
+    gemRadius: 2.5,
+    color: 0x90a4ae,
+    accent: 0x29b6f6,
+  },
 } as const;
 
 /** Rules shared by every thing to collect. */
@@ -189,4 +214,24 @@ export const CONTINUE_BUTTON = {
   arrowSize: 22, // half the height of the white play arrow
   pulseScale: 1.12, // grows and shrinks a little so it is easy to notice
   pulseTime: 500,
+  prizeY: GAME_HEIGHT - 110, // lower down when the big prize is on the screen
+} as const;
+
+/** The big golden prize after level 10. Sizes in pixels. */
+export const TROPHY = {
+  x: GAME_WIDTH / 2,
+  y: 230, // where the bottom of the cup is
+  cupWidth: 120,
+  cupHeight: 90,
+  handleRadius: 24,
+  handleWidth: 10,
+  stemWidth: 24,
+  stemHeight: 36,
+  baseWidth: 110,
+  baseHeight: 22,
+  starOuter: 22,
+  starInner: 9,
+  color: 0xffc107,
+  shade: 0xff8f00,
+  popTime: 700, // milliseconds to grow from nothing to full size
 } as const;

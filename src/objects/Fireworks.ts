@@ -11,6 +11,7 @@ export class Fireworks {
   private readonly dark: Phaser.GameObjects.Rectangle;
   private readonly g: Phaser.GameObjects.Graphics;
   private sparks: Spark[] = [];
+  private fade: Phaser.Tweens.Tween | null = null;
 
   constructor(private readonly scene: Phaser.Scene) {
     this.dark = scene.add
@@ -64,6 +65,12 @@ export class Fireworks {
   }
 
   private fadeTo(alpha: number): void {
-    this.scene.tweens.add({ targets: this.dark, alpha, duration: FIREWORKS.darkenTime });
+    // Stop an earlier fade, so a new show right after the last one stays dark.
+    this.fade?.stop();
+    this.fade = this.scene.tweens.add({
+      targets: this.dark,
+      alpha,
+      duration: FIREWORKS.darkenTime,
+    });
   }
 }

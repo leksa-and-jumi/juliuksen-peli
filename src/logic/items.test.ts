@@ -13,6 +13,9 @@ const kinds: ItemKind[] = [
   'wizardHat',
   'vikingHelmet',
   'star',
+  'necklace',
+  'ring',
+  'tiara',
 ];
 
 describe('itemShape', () => {
