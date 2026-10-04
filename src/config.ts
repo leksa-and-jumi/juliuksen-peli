@@ -32,7 +32,7 @@ export const STICK_FIGURE = {
   headRadius: 12,
   lineWidth: 4,
   color: 0x000000,
-  raftIndex: 0, // which raft it stands on (0 = the lower left raft)
+  raftIndex: 0, // which raft it starts on (0 = the lower left raft)
 } as const;
 
 /** Drawing with the mouse (or a finger on a phone). */
@@ -52,4 +52,12 @@ export const TOOL_BUTTONS = {
   frameWidth: 4,
   pencilColor: 0x000000,
   eraserColor: 0xf48fb1,
+} as const;
+
+/** Climbing up a rope that Julius draws. */
+export const CLIMB = {
+  speed: 120, // pixels per second along the rope
+  grabWidth: 20, // how close (left/right) a rope must be for the figure to grab it
+  minRise: 30, // the rope's top must be at least this much higher than the feet
+  landingSnap: 40, // how close to a raft the rope's top must be to step onto it
 } as const;

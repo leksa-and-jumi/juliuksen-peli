@@ -21,4 +21,11 @@ describe('stickFigureShape', () => {
   it('rejects a figure smaller than its head', () => {
     expect(() => stickFigureShape({ x: 0, y: 0 }, 20, 10)).toThrow(RangeError);
   });
+
+  it('reaches the arms up when climbing', () => {
+    const climbing = stickFigureShape({ x: 100, y: 500 }, 100, 10, 'climb');
+    const hands = climbing.lines.slice(1, 3).map((arm) => arm.to.y);
+    const shoulder = climbing.lines[1]?.from.y ?? 0;
+    expect(hands.every((y) => y < shoulder)).toBe(true);
+  });
 });
