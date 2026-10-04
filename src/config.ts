@@ -34,3 +34,10 @@ export const STICK_FIGURE = {
   color: 0x000000,
   raftIndex: 0, // which raft it stands on (0 = the lower left raft)
 } as const;
+
+/** Drawing with the mouse (or a finger on a phone). */
+export const DRAWING = {
+  lineWidth: 4,
+  color: 0x000000,
+  minStep: 2, // pixels the mouse must move before a new piece of line is drawn
+} as const;
