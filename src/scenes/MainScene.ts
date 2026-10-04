@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import {
   CLIMB,
+  CONTINUE_BUTTON,
   FRIEND,
   GAME_HEIGHT,
   GAME_WIDTH,
@@ -23,6 +24,7 @@ import {
 import { itemHeight } from '../logic/items';
 import { nextLevel } from '../logic/levels';
 import { raftTopCenter } from '../logic/raft';
+import { WEAR_SPOT, wearPoint } from '../logic/wear';
 import { stickFigureShape, type Point } from '../logic/stickFigure';
 import type { Stroke } from '../logic/strokes';
 import { addDrawingPad } from '../objects/DrawingPad';
@@ -32,6 +34,7 @@ import { drawItem, drawItemOutline } from '../objects/Item';
 import { addRaft } from '../objects/Raft';
 import { addRestartButton } from '../objects/RestartButton';
 import { StickFigure } from '../objects/StickFigure';
+import { addTrophy } from '../objects/Trophy';
 
 type ItemState = 'floating' | 'collected' | 'given';
 
@@ -53,7 +56,7 @@ export class MainScene extends Phaser.Scene {
   private state: FigureState = { mode: 'stand' };
   private item!: Phaser.GameObjects.Graphics;
   private itemState: ItemState = 'floating';
-  private friendHeadSpot: Point = { x: 0, y: 0 };
+  private friendWearSpot: Point = { x: 0, y: 0 };
   private fireworks!: Fireworks;
 
   constructor() {
@@ -83,11 +86,11 @@ export class MainScene extends Phaser.Scene {
     const friendMiddle = raftMiddle(friendRaft);
     const friendFeet = { x: friendMiddle.x + this.level.friendOffsetX, y: friendMiddle.y };
     new StickFigure(this, friendFeet);
-    // The thing sits a little below the top of the friend's head.
-    const { head } = stickFigureShape(friendFeet, STICK_FIGURE.height, STICK_FIGURE.headRadius);
-    this.friendHeadSpot = { x: head.x, y: head.y - head.radius / 2 };
-
     const { kind, x, y } = this.level.item;
+    // Where the thing goes on the friend: head, neck or hand.
+    const friendShape = stickFigureShape(friendFeet, STICK_FIGURE.height, STICK_FIGURE.headRadius);
+    this.friendWearSpot = wearPoint(friendShape, WEAR_SPOT[kind], itemHeight(kind, ITEMS));
+
     drawItemOutline(this.add.graphics(), kind, ITEM_SLOT.x, ITEM_SLOT.y);
     this.item = this.add.graphics();
     drawItem(this.item, kind, x, y);
@@ -114,10 +117,20 @@ export class MainScene extends Phaser.Scene {
     const friendRaft = this.raftTops[this.level.friendRaft];
     if (!friendRaft || !standsOn(this.figure.feet, friendRaft)) return;
     this.itemState = 'given';
-    // The round is done when the thing lands on the friend's head.
-    this.flyItemTo(this.friendHeadSpot, FRIEND.giveTime, () =>
-      this.fireworks.start(() => addContinueButton(this, () => this.goToNextLevel())),
+    // The round is done when the thing lands on the friend.
+    this.flyItemTo(this.friendWearSpot, FRIEND.giveTime, () =>
+      this.fireworks.start(() => (this.level.prize ? this.showPrize() : this.showContinue())),
     );
+  }
+
+  private showContinue(y?: number): void {
+    addContinueButton(this, () => this.goToNextLevel(), y);
+  }
+
+  /** The big golden prize, with a second fireworks show around it. */
+  private showPrize(): void {
+    addTrophy(this);
+    this.fireworks.start(() => this.showContinue(CONTINUE_BUTTON.prizeY));
   }
 
   private goToNextLevel(): void {
