@@ -23,5 +23,5 @@ export const RAFT = {
  */
 export const RAFT_PLACES = [
   { offsetX: -150, bottomMargin: 70 },
-  { offsetX: 150, bottomMargin: 300 },
+  { offsetX: 250, bottomMargin: 300 },
 ] as const;
