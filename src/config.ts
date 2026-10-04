@@ -105,8 +105,8 @@ export const FRIEND = {
 
 /** Fireworks when a round is done (the friend has put on the hat). */
 export const FIREWORKS = {
-  bursts: 10,
-  burstInterval: 250, // milliseconds between bursts
+  bursts: 30,
+  burstInterval: 180, // milliseconds between bursts
   particlesPerBurst: 70,
   speed: 170, // pixels per second when a burst explodes
   minSpeedShare: 0.3, // the slowest sparks fly at 30 % of the speed
@@ -116,4 +116,8 @@ export const FIREWORKS = {
   // Bursts appear somewhere in this area of the sky.
   area: { left: 120, right: GAME_WIDTH - 120, top: 80, bottom: 320 },
   colors: [0xe53935, 0xfdd835, 0x43a047, 0x1e88e5, 0x8e24aa, 0xfb8c00],
+  // The screen gets dark while the fireworks are on.
+  darkColor: 0x000000,
+  darkness: 0.85, // 0 = not dark at all, 1 = completely black
+  darkenTime: 700, // milliseconds to get dark, and to get light again
 } as const;
