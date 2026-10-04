@@ -2,7 +2,18 @@ import { describe, expect, it } from 'vitest';
 import { ITEMS } from '../config';
 import { itemHeight, itemShape, type ItemKind } from './items';
 
-const kinds: ItemKind[] = ['hat', 'crown', 'cap', 'bow', 'flower'];
+const kinds: ItemKind[] = [
+  'hat',
+  'crown',
+  'cap',
+  'bow',
+  'flower',
+  'pipo',
+  'partyHat',
+  'wizardHat',
+  'vikingHelmet',
+  'star',
+];
 
 describe('itemShape', () => {
   it.each(kinds)('the %s sits exactly on its bottom line and fits its height', (kind) => {
@@ -26,5 +37,10 @@ describe('itemShape', () => {
     const parts = itemShape('flower', 0, 0, ITEMS);
     expect(parts.filter((p) => p.role === 'main')).toHaveLength(5);
     expect(parts.filter((p) => p.role === 'accent')).toHaveLength(1);
+  });
+
+  it('gives the star five points', () => {
+    const [star] = itemShape('star', 0, 0, ITEMS);
+    expect(star?.points).toHaveLength(10);
   });
 });

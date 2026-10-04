@@ -1,7 +1,18 @@
 import { describe, expect, it } from 'vitest';
-import { GAME_WIDTH } from '../config';
+import {
+  GAME_HEIGHT,
+  GAME_WIDTH,
+  ITEMS,
+  RAFT,
+  RESTART_BUTTON,
+  STICK_FIGURE,
+  TOOL_BUTTONS,
+} from '../config';
 import { LEVELS } from '../levels';
+import { itemShape } from './items';
 import { levelFromQuery, nextLevel } from './levels';
+import { raftTopCenter } from './raft';
+import { stickFigureShape } from './stickFigure';
 
 describe('nextLevel', () => {
   it('goes to the next level', () => {
@@ -30,6 +41,15 @@ describe('levelFromQuery', () => {
 });
 
 describe('LEVELS', () => {
+  it('has at least ten levels', () => {
+    expect(LEVELS.length).toBeGreaterThanOrEqual(10);
+  });
+
+  it('has a different thing to collect on every level', () => {
+    const kinds = LEVELS.map((level) => level.item.kind);
+    expect(new Set(kinds).size).toBe(kinds.length);
+  });
+
   it.each(LEVELS.map((level, i) => [i + 1, level] as const))(
     'level %i points to rafts that exist and keeps the thing on screen',
     (_n, level) => {
@@ -38,6 +58,34 @@ describe('LEVELS', () => {
       expect(level.startRaft).not.toBe(level.friendRaft);
       expect(level.item.x).toBeGreaterThan(0);
       expect(level.item.x).toBeLessThan(GAME_WIDTH);
+    },
+  );
+});
+
+describe('the thing on the head of the friend', () => {
+  // The pencil/eraser buttons (top left) and restart button (top right).
+  const buttonsBottom = TOOL_BUTTONS.margin + TOOL_BUTTONS.size;
+  const leftButtonsRight = TOOL_BUTTONS.margin * 2 + TOOL_BUTTONS.size * 2;
+  const restartLeft = GAME_WIDTH - RESTART_BUTTON.margin - RESTART_BUTTON.size;
+
+  it.each(LEVELS.map((level, i) => [i + 1, level] as const))(
+    'level %i does not hide it under a button',
+    (_n, level) => {
+      const raft = level.rafts[level.friendRaft];
+      if (!raft) throw new Error('missing raft');
+      const top = raftTopCenter(GAME_WIDTH, GAME_HEIGHT, { ...RAFT, ...raft });
+      const feet = { x: top.x + level.friendOffsetX, y: top.y };
+      const { head } = stickFigureShape(feet, STICK_FIGURE.height, STICK_FIGURE.headRadius);
+      const points = itemShape(level.item.kind, head.x, head.y - head.radius / 2, ITEMS).flatMap(
+        (part) => part.points,
+      );
+      const left = Math.min(...points.map((p) => p.x));
+      const right = Math.max(...points.map((p) => p.x));
+      const highest = Math.min(...points.map((p) => p.y));
+      if (highest < buttonsBottom) {
+        expect(left).toBeGreaterThan(leftButtonsRight);
+        expect(right).toBeLessThan(restartLeft);
+      }
     },
   );
 });

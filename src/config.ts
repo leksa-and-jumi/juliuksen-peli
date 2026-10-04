@@ -104,6 +104,43 @@ export const ITEMS = {
     color: 0xab47bc,
     accent: 0xfdd835,
   },
+  pipo: {
+    domeRadius: 13,
+    bandHeight: 6,
+    ballRadius: 5, // the pom-pom on top
+    color: 0x43a047,
+    accent: 0xfdd835,
+  },
+  partyHat: {
+    width: 26,
+    height: 30, // the cone, without the ball on top
+    ballRadius: 5,
+    color: 0x1e88e5,
+    accent: 0xfdd835,
+  },
+  wizardHat: {
+    brimWidth: 36,
+    brimHeight: 4,
+    coneWidth: 24,
+    coneHeight: 34,
+    starOuter: 5, // the little star on the cone
+    starInner: 2,
+    color: 0x5e35b1,
+    accent: 0xfdd835,
+  },
+  vikingHelmet: {
+    domeRadius: 13,
+    hornLength: 12,
+    color: 0x9e9e9e,
+    accent: 0xbcaaa4,
+  },
+  star: {
+    outerRadius: 15,
+    innerRadius: 6,
+    centerRadius: 3,
+    color: 0xffc107,
+    accent: 0xff8f00,
+  },
 } as const;
 
 /** Rules shared by every thing to collect. */

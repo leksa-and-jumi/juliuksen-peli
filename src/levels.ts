@@ -80,4 +80,65 @@ export const LEVELS: readonly Level[] = [
     friendOffsetX: 60,
     item: { kind: 'flower', x: 475, y: 400 },
   },
+  {
+    // Level 6: up to the left, then over to the right. Collect a pipo!
+    rafts: [
+      { offsetX: 0, bottomMargin: 70 },
+      { offsetX: -250, bottomMargin: 280 },
+      { offsetX: 250, bottomMargin: 440 },
+    ],
+    startRaft: 0,
+    friendRaft: 2,
+    friendOffsetX: 60,
+    item: { kind: 'pipo', x: 330, y: 410 },
+  },
+  {
+    // Level 7: a long rope across the screen. Collect a party hat!
+    rafts: [
+      { offsetX: -280, bottomMargin: 70 },
+      { offsetX: 280, bottomMargin: 300 },
+    ],
+    startRaft: 0,
+    friendRaft: 1,
+    friendOffsetX: 60,
+    item: { kind: 'partyHat', x: 400, y: 330 },
+  },
+  {
+    // Level 8: four rafts like a long staircase. Collect a wizard hat!
+    rafts: [
+      { offsetX: -300, bottomMargin: 70 },
+      { offsetX: -100, bottomMargin: 190 },
+      { offsetX: 100, bottomMargin: 310 },
+      { offsetX: 280, bottomMargin: 430 },
+    ],
+    startRaft: 0,
+    friendRaft: 3,
+    friendOffsetX: 30, // not too far right, or the hat hides under the restart button
+    item: { kind: 'wizardHat', x: 560, y: 175 },
+  },
+  {
+    // Level 9: zigzag with four rafts. Collect a viking helmet!
+    rafts: [
+      { offsetX: 250, bottomMargin: 70 },
+      { offsetX: -250, bottomMargin: 180 },
+      { offsetX: 250, bottomMargin: 290 },
+      { offsetX: -250, bottomMargin: 400 },
+    ],
+    startRaft: 0,
+    friendRaft: 3,
+    friendOffsetX: -60,
+    item: { kind: 'vikingHelmet', x: 400, y: 300 },
+  },
+  {
+    // Level 10: the big finale. Collect a star!
+    rafts: [
+      { offsetX: -300, bottomMargin: 70 },
+      { offsetX: 300, bottomMargin: 250 },
+      { offsetX: -150, bottomMargin: 440 },
+    ],
+    startRaft: 0,
+    friendRaft: 2,
+    friendOffsetX: -60,
+    item: { kind: 'star', x: 470, y: 200 },
+  },
 ];
