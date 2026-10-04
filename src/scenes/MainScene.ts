@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { RAFT_PLACES } from '../config';
 import { addRaft } from '../objects/Raft';
 
 /** The game screen. Julius designs everything on it. */
@@ -8,6 +9,8 @@ export class MainScene extends Phaser.Scene {
   }
 
   create(): void {
-    addRaft(this);
+    for (const place of RAFT_PLACES) {
+      addRaft(this, place);
+    }
   }
 }
