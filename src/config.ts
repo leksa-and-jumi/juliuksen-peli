@@ -11,6 +11,7 @@ export const RAFT = {
   width: 200,
   height: 24,
   bottomMargin: 70, // pixels from the bottom edge to the raft's bottom
+  offsetX: -150, // pixels from the middle; negative = to the left
   plankCount: 4,
   seamWidth: 2,
   wood: 0x9c6b3c,
