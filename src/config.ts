@@ -72,3 +72,17 @@ export const RESTART_BUTTON = {
   arrowRadius: 13,
   arrowHeadSize: 8,
 } as const;
+
+/** The hat floating along the way. Collect it and the stick figure wears it! */
+export const HAT = {
+  x: 400,
+  y: 300, // the bottom of the brim
+  brimWidth: 34,
+  brimHeight: 5,
+  crownWidth: 22,
+  crownHeight: 22,
+  bandHeight: 5,
+  color: 0x000000,
+  band: 0xe53935,
+  reach: 20, // how close (left/right) the figure must come to grab it
+} as const;
