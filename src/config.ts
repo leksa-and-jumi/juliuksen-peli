@@ -86,3 +86,12 @@ export const HAT = {
   band: 0xe53935,
   reach: 20, // how close (left/right) the figure must come to grab it
 } as const;
+
+/** The colorless hat picture at the top. A collected hat flies into it. */
+export const HAT_SLOT = {
+  x: GAME_WIDTH / 2,
+  y: 50, // the bottom of the brim
+  outline: 0xbdbdbd,
+  outlineWidth: 2,
+  flyTime: 600, // milliseconds for the hat to fly up into the picture
+} as const;
