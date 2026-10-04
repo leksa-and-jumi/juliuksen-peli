@@ -16,6 +16,7 @@ import { raftTopCenter } from '../logic/raft';
 import { stickFigureShape, type Point } from '../logic/stickFigure';
 import type { Stroke } from '../logic/strokes';
 import { addDrawingPad } from '../objects/DrawingPad';
+import { Fireworks } from '../objects/Fireworks';
 import { drawHat, drawHatOutline } from '../objects/Hat';
 import { addRaft } from '../objects/Raft';
 import { addRestartButton } from '../objects/RestartButton';
@@ -30,7 +31,7 @@ type FigureState = { mode: 'stand' } | { mode: 'climb'; path: Point[]; distance:
  * goes up: the figure climbs it, and steps onto a raft at the top.
  * A hat floats along the way: touch it and it flies into the
  * colorless hat picture at the top. Bring it to the friend on the
- * upper raft, and the friend puts the hat on.
+ * upper raft, and the friend puts the hat on. Then: fireworks!
  */
 export class MainScene extends Phaser.Scene {
   private figure!: StickFigure;
@@ -40,6 +41,7 @@ export class MainScene extends Phaser.Scene {
   private hat!: Phaser.GameObjects.Graphics;
   private hatState: HatState = 'floating';
   private friendHatSpot: Point = { x: 0, y: 0 };
+  private fireworks!: Fireworks;
 
   constructor() {
     super('MainScene');
@@ -73,6 +75,7 @@ export class MainScene extends Phaser.Scene {
     this.hatState = 'floating';
 
     this.strokes = addDrawingPad(this);
+    this.fireworks = new Fireworks(this);
     addRestartButton(this);
   }
 
@@ -80,6 +83,7 @@ export class MainScene extends Phaser.Scene {
     this.moveFigure(delta);
     this.collectHat();
     this.giveHat();
+    this.fireworks.update(delta);
   }
 
   private giveHat(): void {
@@ -87,17 +91,19 @@ export class MainScene extends Phaser.Scene {
     const friendRaft = this.raftTops[FRIEND.raftIndex];
     if (!friendRaft || !standsOn(this.figure.feet, friendRaft)) return;
     this.hatState = 'given';
-    this.flyHatTo(this.friendHatSpot, FRIEND.giveTime);
+    // The round is done when the hat lands on the friend's head.
+    this.flyHatTo(this.friendHatSpot, FRIEND.giveTime, () => this.fireworks.start());
   }
 
   /** The hat is drawn at its starting spot, so it moves by the difference. */
-  private flyHatTo(spot: Point, duration: number): void {
+  private flyHatTo(spot: Point, duration: number, onArrive?: () => void): void {
     this.tweens.add({
       targets: this.hat,
       x: spot.x - HAT.x,
       y: spot.y - HAT.y,
       duration,
       ease: 'Quad.easeInOut',
+      onComplete: onArrive,
     });
   }
 

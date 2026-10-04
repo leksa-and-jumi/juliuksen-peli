@@ -102,3 +102,18 @@ export const FRIEND = {
   offsetX: 60, // pixels right of the raft's middle
   giveTime: 800, // milliseconds for the hat to fly onto its head
 } as const;
+
+/** Fireworks when a round is done (the friend has put on the hat). */
+export const FIREWORKS = {
+  bursts: 10,
+  burstInterval: 250, // milliseconds between bursts
+  particlesPerBurst: 70,
+  speed: 170, // pixels per second when a burst explodes
+  minSpeedShare: 0.3, // the slowest sparks fly at 30 % of the speed
+  gravity: 140, // pixels per second², pulls the sparks down
+  life: 1.3, // seconds a spark is visible
+  sparkRadius: 3,
+  // Bursts appear somewhere in this area of the sky.
+  area: { left: 120, right: GAME_WIDTH - 120, top: 80, bottom: 320 },
+  colors: [0xe53935, 0xfdd835, 0x43a047, 0x1e88e5, 0x8e24aa, 0xfb8c00],
+} as const;
