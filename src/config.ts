@@ -16,23 +16,12 @@ export const RAFT = {
   seam: 0x5d3a1a,
 } as const;
 
-/**
- * Where the rafts are.
- * offsetX: pixels from the middle (negative = left, positive = right).
- * bottomMargin: pixels from the bottom edge to the raft's bottom.
- */
-export const RAFT_PLACES = [
-  { offsetX: -150, bottomMargin: 70 },
-  { offsetX: 250, bottomMargin: 400 },
-] as const;
-
 /** Julius's stick figure. Sizes are in pixels. */
 export const STICK_FIGURE = {
   height: 90, // from feet to top of head
   headRadius: 12,
   lineWidth: 4,
   color: 0x000000,
-  raftIndex: 0, // which raft it starts on (0 = the lower left raft)
 } as const;
 
 /** Drawing with the mouse (or a finger on a phone). */
@@ -73,10 +62,8 @@ export const RESTART_BUTTON = {
   arrowHeadSize: 8,
 } as const;
 
-/** The hat floating along the way. Collect it and the stick figure wears it! */
+/** How the hat looks. Where it floats is set in each level. */
 export const HAT = {
-  x: 400,
-  y: 300, // the bottom of the brim
   brimWidth: 34,
   brimHeight: 5,
   crownWidth: 22,
@@ -96,10 +83,8 @@ export const HAT_SLOT = {
   flyTime: 600, // milliseconds for the hat to fly up into the picture
 } as const;
 
-/** The other stick figure waiting on the upper raft. Bring it the hat! */
+/** The other stick figure waiting for the hat. Where it stands is set in each level. */
 export const FRIEND = {
-  raftIndex: 1, // the upper right raft
-  offsetX: 60, // pixels right of the raft's middle
   giveTime: 800, // milliseconds for the hat to fly onto its head
 } as const;
 
@@ -120,4 +105,14 @@ export const FIREWORKS = {
   darkColor: 0x000000,
   darkness: 0.85, // 0 = not dark at all, 1 = completely black
   darkenTime: 700, // milliseconds to get dark, and to get light again
+} as const;
+
+/** The round green "continue" button that appears after the fireworks. */
+export const CONTINUE_BUTTON = {
+  radius: 50,
+  color: 0x43a047,
+  arrowColor: 0xffffff,
+  arrowSize: 22, // half the height of the white play arrow
+  pulseScale: 1.12, // grows and shrinks a little so it is easy to notice
+  pulseTime: 500,
 } as const;

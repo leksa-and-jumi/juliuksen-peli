@@ -12,15 +12,15 @@
 
 🇬🇧 Draw with the mouse ✏️. The buttons in the top left corner switch between the pencil ⚫ and the eraser 🩷.
 
-🇬🇧 Draw a rope 🪢 from the stick figure up to the high raft, and the stick figure climbs it! Pick up the hat 🎩 on the way: it flies into the empty hat picture at the top. Take it to the other stick figure on the high raft, and it puts the hat on! Then come the fireworks 🎆
+🇬🇧 Draw a rope 🪢 from the stick figure up to the high raft, and the stick figure climbs it! Pick up the hat 🎩 on the way: it flies into the empty hat picture at the top. Take it to the other stick figure on the high raft, and it puts the hat on! Then come the fireworks 🎆, and the green ▶ button takes you to the next level.
 
-🇬🇧 The round arrow ↻ in the top right corner starts the game over.
+🇬🇧 The round arrow ↻ in the top right corner starts the whole game over from level 1.
 
 🇫🇮 Piirrä hiirellä ✏️. Vasemman yläkulman napeista vaihdat kynän ⚫ ja kumin 🩷.
 
-🇫🇮 Piirrä köysi 🪢 tikku-ukolta ylälautalle, niin tikku-ukko kiipeää sitä pitkin! Kerää matkalla hattu 🎩: se lentää ylhäällä olevaan tyhjään hatun kuvaan. Vie hattu ylälautan toiselle tikku-ukolle, niin se laittaa hatun päähänsä! Sitten tulee ilotulitus 🎆
+🇫🇮 Piirrä köysi 🪢 tikku-ukolta ylälautalle, niin tikku-ukko kiipeää sitä pitkin! Kerää matkalla hattu 🎩: se lentää ylhäällä olevaan tyhjään hatun kuvaan. Vie hattu ylälautan toiselle tikku-ukolle, niin se laittaa hatun päähänsä! Sitten tulee ilotulitus 🎆, ja vihreästä ▶-napista pääset seuraavalle tasolle.
 
-🇫🇮 Oikean yläkulman pyöreä nuoli ↻ aloittaa pelin alusta.
+🇫🇮 Oikean yläkulman pyöreä nuoli ↻ aloittaa koko pelin alusta tasolta 1.
 
 _🇬🇧 The game is just starting. Julius decides what comes next!_
 _🇫🇮 Peli on vasta alussa. Julius päättää, mitä siihen tulee!_

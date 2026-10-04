@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { findRope, landingSpot, pointAlongPath, standsOn } from './climb';
+import { findRope, landingSpot, pointAlongPath, raftMiddle, standsOn } from './climb';
 
 const feet = { x: 100, y: 500 };
 // A rope drawn from the figure's chest up to the right.
@@ -69,5 +69,11 @@ describe('standsOn', () => {
   it('knows when the figure is somewhere else', () => {
     expect(standsOn({ x: 550, y: 300 }, raft)).toBe(false);
     expect(standsOn({ x: 300, y: 176 }, raft)).toBe(false);
+  });
+});
+
+describe('raftMiddle', () => {
+  it('finds the middle of the raft top', () => {
+    expect(raftMiddle({ left: 500, right: 700, y: 176 })).toEqual({ x: 600, y: 176 });
   });
 });

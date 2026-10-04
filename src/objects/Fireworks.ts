@@ -20,8 +20,8 @@ export class Fireworks {
     this.g = scene.add.graphics();
   }
 
-  /** Starts a show of many bursts, one after another. */
-  start(): void {
+  /** Starts a show of many bursts, one after another. Calls `onDone` at the end. */
+  start(onDone?: () => void): void {
     this.fadeTo(FIREWORKS.darkness);
 
     let count = 0;
@@ -46,7 +46,10 @@ export class Fireworks {
 
     // Get light again when the last sparks have burnt out.
     const showTime = FIREWORKS.bursts * FIREWORKS.burstInterval + FIREWORKS.life * 1000;
-    this.scene.time.delayedCall(showTime, () => this.fadeTo(0));
+    this.scene.time.delayedCall(showTime, () => {
+      this.fadeTo(0);
+      onDone?.();
+    });
   }
 
   update(delta: number): void {
