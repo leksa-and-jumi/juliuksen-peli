@@ -53,18 +53,23 @@ export function addDrawingPad(scene: Phaser.Scene): () => readonly Stroke[] {
     }
   };
 
-  scene.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-    const point = { x: pointer.x, y: pointer.y };
-    const picked = toolAt(point, buttons);
-    if (picked) {
-      tool = picked;
-      drawButtons();
-      return;
-    }
-    last = point;
-    current = [];
-    paint(point, point);
-  });
+  scene.input.on(
+    'pointerdown',
+    (pointer: Phaser.Input.Pointer, over: Phaser.GameObjects.GameObject[]) => {
+      // Pressing another button (like restart) must not draw.
+      if (over.length > 0) return;
+      const point = { x: pointer.x, y: pointer.y };
+      const picked = toolAt(point, buttons);
+      if (picked) {
+        tool = picked;
+        drawButtons();
+        return;
+      }
+      last = point;
+      current = [];
+      paint(point, point);
+    },
+  );
 
   scene.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
     if (!last || !pointer.isDown) return;

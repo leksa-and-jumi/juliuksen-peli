@@ -6,6 +6,7 @@ import type { Point } from '../logic/stickFigure';
 import type { Stroke } from '../logic/strokes';
 import { addDrawingPad } from '../objects/DrawingPad';
 import { addRaft } from '../objects/Raft';
+import { addRestartButton } from '../objects/RestartButton';
 import { StickFigure } from '../objects/StickFigure';
 
 type FigureState = { mode: 'stand' } | { mode: 'climb'; path: Point[]; distance: number };
@@ -39,6 +40,7 @@ export class MainScene extends Phaser.Scene {
     this.state = { mode: 'stand' };
 
     this.strokes = addDrawingPad(this);
+    addRestartButton(this);
   }
 
   update(_time: number, delta: number): void {
