@@ -164,7 +164,7 @@ export const FRIEND = {
 
 /** Fireworks when a round is done (the friend has got the thing). */
 export const FIREWORKS = {
-  bursts: 30,
+  bursts: 15,
   burstInterval: 180, // milliseconds between bursts
   particlesPerBurst: 70,
   speed: 170, // pixels per second when a burst explodes
