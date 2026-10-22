@@ -1,11 +1,11 @@
 import Phaser from 'phaser';
-import { TROPHY } from '../config';
+import { DEPTH, TROPHY } from '../config';
 import { starPoints } from '../logic/items';
 
 /** The big golden prize cup. It pops up from nothing. */
 export function addTrophy(scene: Phaser.Scene): void {
   const t = TROPHY;
-  const g = scene.add.graphics({ x: t.x, y: t.y });
+  const g = scene.add.graphics({ x: t.x, y: t.y }).setDepth(DEPTH.prize);
   const w = t.cupWidth;
   const h = t.cupHeight;
 

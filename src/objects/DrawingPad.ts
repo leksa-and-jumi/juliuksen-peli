@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { DRAWING, GAME_HEIGHT, GAME_WIDTH, TOOL_BUTTONS } from '../config';
+import { DEPTH, DRAWING, GAME_HEIGHT, GAME_WIDTH, TOOL_BUTTONS } from '../config';
 import { isFarEnough } from '../logic/drawing';
 import { ropeTwists, rotatePoints } from '../logic/geometry';
 import type { Point } from '../logic/stickFigure';
@@ -17,12 +17,15 @@ import { drawButtonLook } from './ButtonLook';
  * stick figure can climb them like ropes.
  */
 export function addDrawingPad(scene: Phaser.Scene): () => readonly Stroke[] {
-  const canvas = scene.add.renderTexture(0, 0, GAME_WIDTH, GAME_HEIGHT).setOrigin(0, 0);
+  const canvas = scene.add
+    .renderTexture(0, 0, GAME_WIDTH, GAME_HEIGHT)
+    .setOrigin(0, 0)
+    .setDepth(DEPTH.ropes);
   // An off-screen brush: each piece of line is drawn here first,
   // then copied onto (or erased from) the canvas.
   const brush = scene.make.graphics({}, false);
   const buttons = toolButtons(TOOL_BUTTONS.size, TOOL_BUTTONS.margin);
-  const buttonsLayer = scene.add.graphics();
+  const buttonsLayer = scene.add.graphics().setDepth(DEPTH.buttons);
 
   let tool: Tool = 'pencil';
   let last: Point | null = null;

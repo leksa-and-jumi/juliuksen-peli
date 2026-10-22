@@ -1,6 +1,11 @@
 import Phaser from 'phaser';
-import { STICK_FIGURE } from '../config';
-import { stickFigureShape, type Point } from '../logic/stickFigure';
+import { DEPTH, STICK_FIGURE } from '../config';
+import {
+  climbingShape,
+  stickFigureShape,
+  type Point,
+  type StickFigureShape,
+} from '../logic/stickFigure';
 
 /** Julius's figure smiles; the friend sticks its tongue out. */
 export type Face = 'smile' | 'tongue';
@@ -18,7 +23,7 @@ export class StickFigure {
     feet: Point,
     private readonly face: Face = 'smile',
   ) {
-    this.g = scene.add.graphics();
+    this.g = scene.add.graphics().setDepth(DEPTH.figures);
     this.feet = feet;
     this.draw('stand');
   }
@@ -28,9 +33,20 @@ export class StickFigure {
     this.draw(pose);
   }
 
+  /** Climbs along a rope going in direction `up`; `phase` (0..1) moves hands and feet. */
+  climbTo(feet: Point, up: Point, phase: number): void {
+    this.feet = feet;
+    const f = STICK_FIGURE;
+    this.render(climbingShape(feet, up, phase, f.height, f.headRadius));
+  }
+
   private draw(pose: 'stand' | 'climb'): void {
     const f = STICK_FIGURE;
-    const { head, lines } = stickFigureShape(this.feet, f.height, f.headRadius, pose);
+    this.render(stickFigureShape(this.feet, f.height, f.headRadius, pose));
+  }
+
+  private render({ head, lines }: StickFigureShape): void {
+    const f = STICK_FIGURE;
     const g = this.g;
     g.clear();
 

@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import {
   CLIMB,
+  DEPTH,
   CONTINUE_BUTTON,
   FRIEND,
   GAME_HEIGHT,
@@ -25,7 +26,7 @@ import { itemHeight } from '../logic/items';
 import { nextLevel } from '../logic/levels';
 import { raftTopCenter } from '../logic/raft';
 import { WEAR_SPOT, wearPoint } from '../logic/wear';
-import { stickFigureShape, type Point } from '../logic/stickFigure';
+import { directionAlong, stickFigureShape, type Point } from '../logic/stickFigure';
 import type { Stroke } from '../logic/strokes';
 import { addDrawingPad } from '../objects/DrawingPad';
 import { addContinueButton } from '../objects/ContinueButton';
@@ -92,8 +93,8 @@ export class MainScene extends Phaser.Scene {
     const friendShape = stickFigureShape(friendFeet, STICK_FIGURE.height, STICK_FIGURE.headRadius);
     this.friendWearSpot = wearPoint(friendShape, WEAR_SPOT[kind], itemHeight(kind, ITEMS));
 
-    drawItemOutline(this.add.graphics(), kind, ITEM_SLOT.x, ITEM_SLOT.y);
-    this.item = this.add.graphics();
+    drawItemOutline(this.add.graphics().setDepth(DEPTH.items), kind, ITEM_SLOT.x, ITEM_SLOT.y);
+    this.item = this.add.graphics().setDepth(DEPTH.items);
     drawItem(this.item, kind, x, y);
     this.itemState = 'floating';
     // The thing bobs gently up and down while it waits to be collected.
@@ -186,9 +187,15 @@ export class MainScene extends Phaser.Scene {
     }
 
     this.state.distance += (CLIMB.speed * delta) / 1000;
-    const { point, done } = pointAlongPath(this.state.path, this.state.distance);
+    const { path, distance } = this.state;
+    const { point, done } = pointAlongPath(path, distance);
     if (!done) {
-      this.figure.moveTo(point, 'climb');
+      const up = directionAlong(
+        (d) => pointAlongPath(path, d).point,
+        distance,
+        CLIMB.directionWindow,
+      );
+      this.figure.climbTo(point, up, (distance / CLIMB.stepLength) % 1);
       return;
     }
     const landing = landingSpot(point, this.raftTops, CLIMB.landingSnap);
