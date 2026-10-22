@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { ITEMS } from '../config';
-import { itemHeight, itemShape, type ItemKind } from './items';
+import { darken, itemHeight, itemShape, type ItemKind } from './items';
 
 const kinds: ItemKind[] = [
   'hat',
@@ -45,5 +45,23 @@ describe('itemShape', () => {
   it('gives the star five points', () => {
     const [star] = itemShape('star', 0, 0, ITEMS);
     expect(star?.points).toHaveLength(10);
+  });
+});
+
+describe('darken', () => {
+  it('makes a color darker', () => {
+    expect(darken(0xffffff, 0.5)).toBe(0x808080);
+    expect(darken(0xff0000, 0.5)).toBe(0x800000);
+  });
+
+  it('keeps black black', () => {
+    expect(darken(0x000000, 0.6)).toBe(0x000000);
+  });
+});
+
+describe('real look', () => {
+  it.each(kinds)('the %s has light or shadow on it', (kind) => {
+    const roles = itemShape(kind, 0, 0, ITEMS).map((p) => p.role);
+    expect(roles.some((r) => r === 'shine' || r === 'shade')).toBe(true);
   });
 });
