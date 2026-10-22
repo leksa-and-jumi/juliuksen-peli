@@ -86,7 +86,7 @@ export class MainScene extends Phaser.Scene {
 
     const friendMiddle = raftMiddle(friendRaft);
     const friendFeet = { x: friendMiddle.x + this.level.friendOffsetX, y: friendMiddle.y };
-    new StickFigure(this, friendFeet);
+    new StickFigure(this, friendFeet, 'tongue');
     const { kind, x, y } = this.level.item;
     // Where the thing goes on the friend: head, neck or hand.
     const friendShape = stickFigureShape(friendFeet, STICK_FIGURE.height, STICK_FIGURE.headRadius);

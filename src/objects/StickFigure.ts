@@ -2,15 +2,22 @@ import Phaser from 'phaser';
 import { STICK_FIGURE } from '../config';
 import { stickFigureShape, type Point } from '../logic/stickFigure';
 
+/** Julius's figure smiles; the friend sticks its tongue out. */
+export type Face = 'smile' | 'tongue';
+
 /**
- * Julius's stick figure, drawn with code: round joints, a filled
- * head, eyes and a smile. Its position is its feet.
+ * A stick figure drawn with code: round joints, a filled head,
+ * eyes and a smile (or a tongue). Its position is its feet.
  */
 export class StickFigure {
   private readonly g: Phaser.GameObjects.Graphics;
   feet: Point;
 
-  constructor(scene: Phaser.Scene, feet: Point) {
+  constructor(
+    scene: Phaser.Scene,
+    feet: Point,
+    private readonly face: Face = 'smile',
+  ) {
     this.g = scene.add.graphics();
     this.feet = feet;
     this.draw('stand');
@@ -42,6 +49,19 @@ export class StickFigure {
 
     // Eyes and a smile.
     const r = head.radius;
+    if (this.face === 'tongue') {
+      // The tongue hangs out from the middle of the smile.
+      const mouthY = head.y + r * 0.55;
+      g.fillStyle(f.tongue);
+      g.fillRoundedRect(head.x - f.tongueWidth / 2, mouthY - 1, f.tongueWidth, f.tongueLength, {
+        tl: 0,
+        tr: 0,
+        bl: f.tongueWidth / 2,
+        br: f.tongueWidth / 2,
+      });
+      g.lineStyle(1, f.tongueLine);
+      g.lineBetween(head.x, mouthY, head.x, mouthY + f.tongueLength * 0.6);
+    }
     g.fillStyle(f.color);
     g.fillCircle(head.x - r * 0.38, head.y - r * 0.15, f.eyeRadius);
     g.fillCircle(head.x + r * 0.38, head.y - r * 0.15, f.eyeRadius);

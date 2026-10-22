@@ -41,6 +41,10 @@ export const STICK_FIGURE = {
   face: 0xffffff, // the head is filled, so lines behind it do not show through
   eyeRadius: 1.8,
   smileWidth: 2,
+  tongue: 0xef5350, // the friend sticks its tongue out
+  tongueLine: 0xb71c1c,
+  tongueWidth: 8,
+  tongueLength: 12, // long enough to hang out over the chin
 } as const;
 
 /** Drawing with the mouse (or a finger on a phone). */
