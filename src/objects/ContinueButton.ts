@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { BUTTON_STYLE, CONTINUE_BUTTON, GAME_HEIGHT, GAME_WIDTH } from '../config';
+import { BUTTON_STYLE, CONTINUE_BUTTON, DEPTH, GAME_HEIGHT, GAME_WIDTH } from '../config';
 
 /**
  * A big round green button with a white play arrow, in the middle of
@@ -11,7 +11,7 @@ export function addContinueButton(
   y: number = GAME_HEIGHT / 2,
 ): void {
   const { radius, arrowSize } = CONTINUE_BUTTON;
-  const g = scene.add.graphics({ x: GAME_WIDTH / 2, y });
+  const g = scene.add.graphics({ x: GAME_WIDTH / 2, y }).setDepth(DEPTH.prize);
   g.fillStyle(BUTTON_STYLE.shadow, BUTTON_STYLE.shadowAlpha);
   g.fillCircle(0, BUTTON_STYLE.shadowOffset * 2, radius);
   g.fillStyle(CONTINUE_BUTTON.color);
@@ -35,6 +35,7 @@ export function addContinueButton(
 
   scene.add
     .zone(GAME_WIDTH / 2, y, radius * 2, radius * 2)
+    .setDepth(DEPTH.prize)
     .setInteractive({ useHandCursor: true })
     .on('pointerdown', onPress);
 }

@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { GAME_HEIGHT, GAME_WIDTH, RAFT } from '../config';
+import { DEPTH, GAME_HEIGHT, GAME_WIDTH, RAFT } from '../config';
 import { raftPlanks } from '../logic/raft';
 
 /**
@@ -11,7 +11,7 @@ export function addRaft(
   scene: Phaser.Scene,
   place: { offsetX: number; bottomMargin: number },
 ): Phaser.GameObjects.Graphics {
-  const g = scene.add.graphics();
+  const g = scene.add.graphics().setDepth(DEPTH.rafts);
   const planks = raftPlanks(GAME_WIDTH, GAME_HEIGHT, { ...RAFT, ...place });
   const first = planks[0];
   const last = planks.at(-1);

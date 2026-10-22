@@ -2,6 +2,20 @@
 export const GAME_WIDTH = 800;
 export const GAME_HEIGHT = 600;
 
+/**
+ * What is drawn on top of what (bigger = closer to you).
+ * The stick figures are in front of the ropes, so you see them grip the rope.
+ */
+export const DEPTH = {
+  rafts: 0,
+  ropes: 1,
+  figures: 2,
+  items: 3,
+  fireworks: 4,
+  prize: 5,
+  buttons: 6,
+} as const;
+
 export const COLORS = {
   background: 0xffffff,
 } as const;
@@ -98,6 +112,8 @@ export const CLIMB = {
   grabWidth: 20, // how close (left/right) a rope must be for the figure to grab it
   minRise: 30, // the rope's top must be at least this much higher than the feet
   landingSnap: 40, // how close to a raft the rope's top must be to step onto it
+  stepLength: 36, // pixels of rope for one full round of hand-over-hand moves
+  directionWindow: 15, // pixels to look back and ahead when finding the rope's direction
 } as const;
 
 /** The round arrow button in the top right corner that starts the level over. */

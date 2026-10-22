@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { FIREWORKS, GAME_HEIGHT, GAME_WIDTH } from '../config';
+import { DEPTH, FIREWORKS, GAME_HEIGHT, GAME_WIDTH } from '../config';
 import { burst, randomSpot, stepSparks, type Spark } from '../logic/fireworks';
 
 /**
@@ -17,8 +17,9 @@ export class Fireworks {
     this.dark = scene.add
       .rectangle(0, 0, GAME_WIDTH, GAME_HEIGHT, FIREWORKS.darkColor)
       .setOrigin(0, 0)
-      .setAlpha(0);
-    this.g = scene.add.graphics();
+      .setAlpha(0)
+      .setDepth(DEPTH.fireworks);
+    this.g = scene.add.graphics().setDepth(DEPTH.fireworks);
   }
 
   /** Starts a show of many bursts, one after another. Calls `onDone` at the end. */

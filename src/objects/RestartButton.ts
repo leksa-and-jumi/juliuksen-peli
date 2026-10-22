@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { GAME_WIDTH, RESTART_BUTTON } from '../config';
+import { DEPTH, GAME_WIDTH, RESTART_BUTTON } from '../config';
 import { arcArrowHead } from '../logic/arrow';
 import { drawButtonLook } from './ButtonLook';
 
@@ -15,8 +15,8 @@ export function addRestartButton(scene: Phaser.Scene, onPress: () => void): void
 
   // Everything is drawn around (0, 0), so the button can shrink from its middle.
   // The shadow is on its own layer, so it stays put when the button is pressed.
-  const shadow = scene.add.graphics({ x: centerX, y: centerY });
-  const g = scene.add.graphics({ x: centerX, y: centerY });
+  const shadow = scene.add.graphics({ x: centerX, y: centerY }).setDepth(DEPTH.buttons);
+  const g = scene.add.graphics({ x: centerX, y: centerY }).setDepth(DEPTH.buttons);
   drawButtonLook(g, 0, 0, b.size, false, shadow);
 
   const start = Phaser.Math.DegToRad(b.arrowStartDeg);
@@ -32,6 +32,7 @@ export function addRestartButton(scene: Phaser.Scene, onPress: () => void): void
 
   scene.add
     .zone(centerX, centerY, b.size, b.size)
+    .setDepth(DEPTH.buttons)
     .setInteractive({ useHandCursor: true })
     .on('pointerdown', () => {
       // A quick squish, then do what the button is for.
