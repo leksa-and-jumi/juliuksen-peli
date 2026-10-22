@@ -56,6 +56,7 @@ export class MainScene extends Phaser.Scene {
   private state: FigureState = { mode: 'stand' };
   private item!: Phaser.GameObjects.Graphics;
   private itemState: ItemState = 'floating';
+  private itemFloat: Phaser.Tweens.Tween | null = null;
   private friendWearSpot: Point = { x: 0, y: 0 };
   private fireworks!: Fireworks;
 
@@ -95,6 +96,15 @@ export class MainScene extends Phaser.Scene {
     this.item = this.add.graphics();
     drawItem(this.item, kind, x, y);
     this.itemState = 'floating';
+    // The thing bobs gently up and down while it waits to be collected.
+    this.itemFloat = this.tweens.add({
+      targets: this.item,
+      y: -ITEM.floatHeight,
+      duration: ITEM.floatTime,
+      ease: 'Sine.easeInOut',
+      yoyo: true,
+      repeat: -1,
+    });
 
     this.strokes = addDrawingPad(this);
     this.fireworks = new Fireworks(this);
@@ -155,6 +165,7 @@ export class MainScene extends Phaser.Scene {
     const middle = { x, y: y - itemHeight(kind, ITEMS) / 2 };
     if (figureTouches(this.figure.feet, STICK_FIGURE.height, ITEM.reach, middle)) {
       this.itemState = 'collected';
+      this.itemFloat?.stop();
       this.flyItemTo(ITEM_SLOT, ITEM_SLOT.flyTime);
     }
   }

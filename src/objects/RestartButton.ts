@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { GAME_WIDTH, RESTART_BUTTON } from '../config';
 import { arcArrowHead } from '../logic/arrow';
+import { drawButtonLook } from './ButtonLook';
 
 /**
  * A raised, rounded button with a round arrow ↻ in the top right corner.
@@ -13,15 +14,10 @@ export function addRestartButton(scene: Phaser.Scene, onPress: () => void): void
   const centerY = b.margin + half;
 
   // Everything is drawn around (0, 0), so the button can shrink from its middle.
-  const shadow = scene.add.graphics({ x: centerX, y: centerY + b.shadowOffset });
-  shadow.fillStyle(b.shadow, b.shadowAlpha);
-  shadow.fillRoundedRect(-half, -half, b.size, b.size, b.cornerRadius);
-
+  // The shadow is on its own layer, so it stays put when the button is pressed.
+  const shadow = scene.add.graphics({ x: centerX, y: centerY });
   const g = scene.add.graphics({ x: centerX, y: centerY });
-  g.fillStyle(b.background);
-  g.fillRoundedRect(-half, -half, b.size, b.size, b.cornerRadius);
-  g.lineStyle(b.borderWidth, b.border);
-  g.strokeRoundedRect(-half, -half, b.size, b.size, b.cornerRadius);
+  drawButtonLook(g, 0, 0, b.size, false, shadow);
 
   const start = Phaser.Math.DegToRad(b.arrowStartDeg);
   const end = Phaser.Math.DegToRad(b.arrowEndDeg);

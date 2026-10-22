@@ -59,7 +59,11 @@ export class Fireworks {
     this.g.clear();
     for (const s of this.sparks) {
       // Sparks fade out as they burn.
-      this.g.fillStyle(s.color, Math.min(1, s.life / FIREWORKS.life + 0.2));
+      const alpha = Math.min(1, s.life / FIREWORKS.life + 0.2);
+      // A soft glow first, then the bright spark on top.
+      this.g.fillStyle(s.color, alpha * FIREWORKS.glowAlpha);
+      this.g.fillCircle(s.x, s.y, FIREWORKS.glowRadius);
+      this.g.fillStyle(s.color, alpha);
       this.g.fillCircle(s.x, s.y, FIREWORKS.sparkRadius);
     }
   }
