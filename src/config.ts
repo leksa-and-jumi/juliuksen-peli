@@ -12,8 +12,24 @@ export const RAFT = {
   height: 24,
   plankCount: 4,
   seamWidth: 2,
-  wood: 0x9c6b3c,
+  // Every plank gets a slightly different wood color, like real wood.
+  woods: [0x9c6b3c, 0xa8774a, 0x936236, 0xa16f40],
   seam: 0x5d3a1a,
+  highlight: 0xc9965f, // light top edge where the sun hits
+  highlightHeight: 4,
+  shade: 0x6d4524, // dark bottom edge
+  shadeHeight: 5,
+  grain: 0x6d4524, // the thin lines in the wood
+  grainAlpha: 0.5,
+  nail: 0x3e2a17,
+  nailRadius: 1.6,
+  nailInset: 6, // how far the nails are from the plank edges
+  rope: 0xd2b48c, // the ropes that tie the planks together
+  ropeDark: 0x8d6e3f,
+  ropeWidth: 10,
+  shadow: 0x000000, // soft shadow under the raft
+  shadowAlpha: 0.12,
+  shadowDrop: 8,
 } as const;
 
 /** Julius's stick figure. Sizes are in pixels. */
@@ -22,25 +38,54 @@ export const STICK_FIGURE = {
   headRadius: 12,
   lineWidth: 4,
   color: 0x000000,
+  face: 0xffffff, // the head is filled, so lines behind it do not show through
+  eyeRadius: 1.8,
+  smileWidth: 2,
 } as const;
 
 /** Drawing with the mouse (or a finger on a phone). */
 export const DRAWING = {
-  lineWidth: 4,
-  color: 0x000000,
+  lineWidth: 7,
+  color: 0xc8a165, // the rope you draw is tan, like a real rope
+  twistColor: 0x8d6e3f, // dark stripes make the rope look twisted
+  twistSpacing: 7, // pixels between the stripes
+  twistWidth: 2,
   eraserWidth: 28,
   minStep: 2, // pixels the mouse must move before a new piece of line is drawn
+} as const;
+
+/** How every small button looks: raised, rounded, with a shadow. */
+export const BUTTON_STYLE = {
+  cornerRadius: 12,
+  background: 0xffffff,
+  border: 0xbdbdbd,
+  borderWidth: 2,
+  selectedBorder: 0x1e88e5,
+  selectedBorderWidth: 4,
+  shadow: 0x000000,
+  shadowAlpha: 0.25,
+  shadowOffset: 3, // the shadow sits a little lower, so the button looks raised
 } as const;
 
 /** The pencil and eraser buttons in the top left corner. */
 export const TOOL_BUTTONS = {
   size: 48,
   margin: 12, // gap from the screen edge and between the buttons
-  background: 0xeeeeee,
-  selectedFrame: 0x2196f3,
-  frameWidth: 4,
-  pencilColor: 0x000000,
-  eraserColor: 0xf48fb1,
+  // The pencil, drawn lying from the bottom left to the top right.
+  pencilLength: 34,
+  pencilWidth: 8,
+  pencilTip: 8, // length of the sharpened wooden tip
+  pencilBody: 0xfdd835,
+  pencilWood: 0xf5deb3,
+  pencilLead: 0x424242,
+  pencilMetal: 0xb0bec5,
+  pencilEraser: 0xf48fb1,
+  // The eraser block, tilted a little.
+  eraserLength: 30,
+  eraserHeight: 14,
+  eraserTiltDeg: -20,
+  eraserPink: 0xf48fb1,
+  eraserSleeve: 0x1e88e5,
 } as const;
 
 /** Climbing up a rope that Julius draws. */
@@ -55,13 +100,6 @@ export const CLIMB = {
 export const RESTART_BUTTON = {
   size: 48,
   margin: 12, // gap from the screen edge
-  cornerRadius: 12,
-  background: 0xffffff,
-  border: 0xbdbdbd,
-  borderWidth: 2,
-  shadow: 0x000000,
-  shadowAlpha: 0.25,
-  shadowOffset: 3, // the shadow sits a little lower, so the button looks raised
   arrowColor: 0x1e88e5,
   arrowWidth: 5,
   arrowRadius: 12,
@@ -181,6 +219,8 @@ export const ITEMS = {
 /** Rules shared by every thing to collect. */
 export const ITEM = {
   reach: 20, // how close (left/right) the figure must come to grab it
+  floatHeight: 5, // the floating thing bobs up and down this much
+  floatTime: 900, // milliseconds for one bob
 } as const;
 
 /** The colorless picture at the top. A collected thing flies into it. */
@@ -207,6 +247,8 @@ export const FIREWORKS = {
   gravity: 140, // pixels per second², pulls the sparks down
   life: 1.3, // seconds a spark is visible
   sparkRadius: 3,
+  glowRadius: 7, // a soft light around every spark
+  glowAlpha: 0.25,
   // Bursts appear somewhere in this area of the sky.
   area: { left: 120, right: GAME_WIDTH - 120, top: 80, bottom: 320 },
   colors: [0xe53935, 0xfdd835, 0x43a047, 0x1e88e5, 0x8e24aa, 0xfb8c00],
@@ -220,6 +262,10 @@ export const FIREWORKS = {
 export const CONTINUE_BUTTON = {
   radius: 50,
   color: 0x43a047,
+  ring: 0xffffff, // white edge around the button
+  ringWidth: 4,
+  shine: 0xffffff, // a soft light spot on the top
+  shineAlpha: 0.25,
   arrowColor: 0xffffff,
   arrowSize: 22, // half the height of the white play arrow
   pulseScale: 1.12, // grows and shrinks a little so it is easy to notice
@@ -243,5 +289,7 @@ export const TROPHY = {
   starInner: 9,
   color: 0xffc107,
   shade: 0xff8f00,
+  shine: 0xffffff, // a light stripe makes the gold look shiny
+  shineAlpha: 0.45,
   popTime: 700, // milliseconds to grow from nothing to full size
 } as const;

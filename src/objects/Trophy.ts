@@ -31,6 +31,18 @@ export function addTrophy(scene: Phaser.Scene): void {
     ],
     true,
   );
+  // A light stripe on the left side of the cup makes it shine.
+  g.fillStyle(t.shine, t.shineAlpha);
+  g.fillPoints(
+    [
+      new Phaser.Math.Vector2(-w * 0.38, -h * 0.92),
+      new Phaser.Math.Vector2(-w * 0.26, -h * 0.92),
+      new Phaser.Math.Vector2(-w * 0.18, -h * 0.25),
+      new Phaser.Math.Vector2(-w * 0.26, -h * 0.25),
+    ],
+    true,
+  );
+  g.fillStyle(t.color);
   g.fillRect(-t.stemWidth / 2, 0, t.stemWidth, t.stemHeight);
   g.fillStyle(t.shade);
   g.fillRect(-t.baseWidth / 2, t.stemHeight, t.baseWidth, t.baseHeight);
