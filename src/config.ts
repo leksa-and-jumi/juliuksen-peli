@@ -150,6 +150,7 @@ export const ITEMS = {
     bandHeight: 7,
     color: 0xfdd835,
     accent: 0xe53935,
+    gem: 0x29b6f6,
   },
   cap: {
     domeRadius: 13,
@@ -185,6 +186,7 @@ export const ITEMS = {
     ballRadius: 5,
     color: 0x1e88e5,
     accent: 0xfdd835,
+    gem: 0xec407a, // the dots on the cone
   },
   wizardHat: {
     brimWidth: 36,
@@ -201,6 +203,7 @@ export const ITEMS = {
     hornLength: 12,
     color: 0x9e9e9e,
     accent: 0xbcaaa4,
+    gem: 0x616161, // the rivets
   },
   star: {
     outerRadius: 15,
@@ -234,6 +237,16 @@ export const ITEMS = {
     color: 0x90a4ae,
     accent: 0x29b6f6,
   },
+} as const;
+
+/** Light, shadow and edges that make every thing look more real. */
+export const ITEM_LOOK = {
+  shine: 0xffffff,
+  shineAlpha: 0.5,
+  shade: 0x000000,
+  shadeAlpha: 0.22,
+  edgeDarken: 0.6, // edges are the part's own color, this much darker
+  edgeWidth: 1.2,
 } as const;
 
 /** Rules shared by every thing to collect. */
