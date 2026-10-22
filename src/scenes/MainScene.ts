@@ -98,11 +98,8 @@ export class MainScene extends Phaser.Scene {
 
     this.strokes = addDrawingPad(this);
     this.fireworks = new Fireworks(this);
-    addRestartButton(this, () => {
-      // Start the whole game over, from the first level.
-      this.registry.set(LEVEL_KEY, 0);
-      this.scene.restart();
-    });
+    // Start this level over (the level number stays the same).
+    addRestartButton(this, () => this.scene.restart());
   }
 
   update(_time: number, delta: number): void {

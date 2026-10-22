@@ -14,13 +14,13 @@
 
 🇬🇧 Draw a rope 🪢 from the stick figure up to the high raft, and the stick figure climbs it! Pick up the thing on the way (hat 🎩, crown 👑, cap 🧢, bow 🎀, flower 🌸, beanie 🧶, party hat 🥳, wizard hat 🧙, viking helmet ⚔️, star ⭐: a new one on every level): it flies into the empty picture at the top. Take it to the other stick figure on the high raft, and it puts it on! Then come the fireworks 🎆, and the green ▶ button takes you to the next level.
 
-🇬🇧 The round arrow ↻ in the top right corner starts the whole game over from level 1.
+🇬🇧 The round arrow ↻ in the top right corner starts the level over.
 
 🇫🇮 Piirrä hiirellä ✏️. Vasemman yläkulman napeista vaihdat kynän ⚫ ja kumin 🩷.
 
 🇫🇮 Piirrä köysi 🪢 tikku-ukolta ylälautalle, niin tikku-ukko kiipeää sitä pitkin! Kerää matkalla juttu (hattu 🎩, kruunu 👑, lippis 🧢, rusetti 🎀, kukka 🌸, pipo 🧶, juhlahattu 🥳, velhon hattu 🧙, viikinkikypärä ⚔️, tähti ⭐: joka tasolla uusi): se lentää ylhäällä olevaan tyhjään kuvaan. Vie se ylälautan toiselle tikku-ukolle, niin se laittaa sen päähänsä! Sitten tulee ilotulitus 🎆, ja vihreästä ▶-napista pääset seuraavalle tasolle.
 
-🇫🇮 Oikean yläkulman pyöreä nuoli ↻ aloittaa koko pelin alusta tasolta 1.
+🇫🇮 Oikean yläkulman pyöreä nuoli ↻ aloittaa tason alusta.
 
 🇬🇧 There are 13 levels. After level 10 you get a big golden prize 🏆, and then come the jewelry levels 💎 (necklace, ring, tiara). Tip: `?level=3` at the end of the address opens level 3 directly.
 

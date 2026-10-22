@@ -51,15 +51,25 @@ export const CLIMB = {
   landingSnap: 40, // how close to a raft the rope's top must be to step onto it
 } as const;
 
-/** The round arrow button in the top right corner that starts the game over. */
+/** The round arrow button in the top right corner that starts the level over. */
 export const RESTART_BUTTON = {
   size: 48,
   margin: 12, // gap from the screen edge
-  background: 0xeeeeee,
-  arrowColor: 0x000000,
-  arrowWidth: 4,
-  arrowRadius: 13,
+  cornerRadius: 12,
+  background: 0xffffff,
+  border: 0xbdbdbd,
+  borderWidth: 2,
+  shadow: 0x000000,
+  shadowAlpha: 0.25,
+  shadowOffset: 3, // the shadow sits a little lower, so the button looks raised
+  arrowColor: 0x1e88e5,
+  arrowWidth: 5,
+  arrowRadius: 12,
+  arrowStartDeg: -70, // the arrow goes clockwise from here...
+  arrowEndDeg: 220, // ...to here, where the arrow head is
   arrowHeadSize: 8,
+  pressScale: 0.85, // shrinks a little when pressed, like a real button
+  pressTime: 80,
 } as const;
 
 /**
