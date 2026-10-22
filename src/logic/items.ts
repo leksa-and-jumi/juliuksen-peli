@@ -10,7 +10,10 @@ export type ItemKind =
   | 'partyHat'
   | 'wizardHat'
   | 'vikingHelmet'
-  | 'star';
+  | 'star'
+  | 'necklace'
+  | 'ring'
+  | 'tiara';
 
 /** One filled piece of a thing, as a closed polygon. */
 export interface ItemPart {
@@ -42,6 +45,15 @@ export interface ItemSizes {
   };
   vikingHelmet: { domeRadius: number; hornLength: number };
   star: { outerRadius: number; innerRadius: number; centerRadius: number };
+  necklace: { radius: number; beads: number; beadRadius: number; pendantRadius: number };
+  ring: { outerRadius: number; innerRadius: number; gemSize: number };
+  tiara: {
+    width: number;
+    bandHeight: number;
+    spikes: number;
+    spikeHeight: number;
+    gemRadius: number;
+  };
 }
 
 /** Points around a circle; enough of them to look round when small. */
@@ -66,7 +78,7 @@ function dome(cx: number, cy: number, r: number): Point[] {
 }
 
 /** A five-pointed star with its top point straight up. */
-function starPoints(cx: number, cy: number, outer: number, inner: number): Point[] {
+export function starPoints(cx: number, cy: number, outer: number, inner: number): Point[] {
   return Array.from({ length: 10 }, (_, i) => {
     const angle = -Math.PI / 2 + (i / 10) * Math.PI * 2;
     const r = i % 2 === 0 ? outer : inner;
@@ -233,6 +245,66 @@ function rawShape(kind: ItemKind, sizes: ItemSizes): ItemPart[] {
       return [
         { role: 'main', points: starPoints(0, 0, st.outerRadius, st.innerRadius) },
         { role: 'accent', points: circle(0, 0, st.centerRadius) },
+      ];
+    }
+    case 'necklace': {
+      const n = sizes.necklace;
+      // Beads hang in a U shape, with a gem at the bottom.
+      const beads: ItemPart[] = Array.from({ length: n.beads }, (_, i) => {
+        const angle = (i / (n.beads - 1)) * Math.PI;
+        return {
+          role: 'main',
+          points: circle(Math.cos(angle) * n.radius, Math.sin(angle) * n.radius, n.beadRadius),
+        };
+      });
+      return [
+        ...beads,
+        { role: 'accent', points: circle(0, n.radius + n.pendantRadius, n.pendantRadius) },
+      ];
+    }
+    case 'ring': {
+      const r = sizes.ring;
+      // Around the outside, then back around the inside, leaves a hole.
+      const outer = circle(0, 0, r.outerRadius);
+      const inner = circle(0, 0, r.innerRadius).reverse();
+      const first = outer[0];
+      const innerFirst = inner.at(-1);
+      const band = first && innerFirst ? [...outer, first, innerFirst, ...inner] : outer;
+      const gemMiddle = -r.outerRadius - r.gemSize;
+      return [
+        { role: 'main', points: band },
+        {
+          role: 'accent',
+          points: [
+            { x: 0, y: gemMiddle - r.gemSize },
+            { x: r.gemSize, y: gemMiddle },
+            { x: 0, y: gemMiddle + r.gemSize },
+            { x: -r.gemSize, y: gemMiddle },
+          ],
+        },
+      ];
+    }
+    case 'tiara': {
+      const t = sizes.tiara;
+      const half = t.width / 2;
+      const step = t.width / (t.spikes - 1);
+      const spikeTops = Array.from({ length: t.spikes }, (_, i) => ({
+        x: -half + i * step,
+        // The middle spike is the tallest.
+        y: -t.bandHeight - t.spikeHeight * (i === Math.floor(t.spikes / 2) ? 1.4 : 1),
+      }));
+      const outline: Point[] = [{ x: -half, y: 0 }];
+      spikeTops.forEach((top, i) => {
+        outline.push(top);
+        if (i < spikeTops.length - 1) outline.push({ x: top.x + step / 2, y: -t.bandHeight });
+      });
+      outline.push({ x: half, y: 0 });
+      return [
+        { role: 'main', points: outline },
+        ...spikeTops.map((top): ItemPart => ({
+          role: 'accent',
+          points: circle(top.x, top.y + t.gemRadius * 2, t.gemRadius),
+        })),
       ];
     }
   }

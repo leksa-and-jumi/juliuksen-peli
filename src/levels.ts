@@ -11,6 +11,7 @@ import type { ItemKind } from './logic/items';
  * friendOffsetX: where on its raft the friend stands, from the raft's middle.
  * item: the thing to collect on this level, and where it floats
  *   (x, and y = the bottom of the thing).
+ * prize: true gives the big golden prize after this level.
  */
 /** The game remembers the current level under this name while scenes restart. */
 export const LEVEL_KEY = 'level';
@@ -21,6 +22,7 @@ export interface Level {
   friendRaft: number;
   friendOffsetX: number;
   item: { kind: ItemKind; x: number; y: number };
+  prize?: boolean;
 }
 
 export const LEVELS: readonly Level[] = [
@@ -140,5 +142,41 @@ export const LEVELS: readonly Level[] = [
     friendRaft: 2,
     friendOffsetX: -60,
     item: { kind: 'star', x: 470, y: 200 },
+    prize: true,
+  },
+  {
+    // Level 11: the first jewelry level 💎. Give a necklace!
+    rafts: [
+      { offsetX: 280, bottomMargin: 70 },
+      { offsetX: -200, bottomMargin: 380 },
+    ],
+    startRaft: 0,
+    friendRaft: 1,
+    friendOffsetX: -60,
+    item: { kind: 'necklace', x: 480, y: 330 },
+  },
+  {
+    // Level 12: out to the right and back up left. Give a ring!
+    rafts: [
+      { offsetX: -280, bottomMargin: 70 },
+      { offsetX: 100, bottomMargin: 230 },
+      { offsetX: -200, bottomMargin: 420 },
+    ],
+    startRaft: 0,
+    friendRaft: 2,
+    friendOffsetX: -60,
+    item: { kind: 'ring', x: 350, y: 235 },
+  },
+  {
+    // Level 13: left, then all the way up right. Give a tiara!
+    rafts: [
+      { offsetX: 0, bottomMargin: 70 },
+      { offsetX: -280, bottomMargin: 250 },
+      { offsetX: 250, bottomMargin: 440 },
+    ],
+    startRaft: 0,
+    friendRaft: 2,
+    friendOffsetX: 60,
+    item: { kind: 'tiara', x: 390, y: 210 },
   },
 ];

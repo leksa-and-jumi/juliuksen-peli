@@ -9,10 +9,11 @@ import {
   TOOL_BUTTONS,
 } from '../config';
 import { LEVELS } from '../levels';
-import { itemShape } from './items';
+import { itemHeight, itemShape } from './items';
 import { levelFromQuery, nextLevel } from './levels';
 import { raftTopCenter } from './raft';
 import { stickFigureShape } from './stickFigure';
+import { WEAR_SPOT, wearPoint } from './wear';
 
 describe('nextLevel', () => {
   it('goes to the next level', () => {
@@ -45,6 +46,10 @@ describe('LEVELS', () => {
     expect(LEVELS.length).toBeGreaterThanOrEqual(10);
   });
 
+  it('gives the big prize after level 10', () => {
+    expect(LEVELS[9]?.prize).toBe(true);
+  });
+
   it('has a different thing to collect on every level', () => {
     const kinds = LEVELS.map((level) => level.item.kind);
     expect(new Set(kinds).size).toBe(kinds.length);
@@ -75,10 +80,10 @@ describe('the thing on the head of the friend', () => {
       if (!raft) throw new Error('missing raft');
       const top = raftTopCenter(GAME_WIDTH, GAME_HEIGHT, { ...RAFT, ...raft });
       const feet = { x: top.x + level.friendOffsetX, y: top.y };
-      const { head } = stickFigureShape(feet, STICK_FIGURE.height, STICK_FIGURE.headRadius);
-      const points = itemShape(level.item.kind, head.x, head.y - head.radius / 2, ITEMS).flatMap(
-        (part) => part.points,
-      );
+      const figure = stickFigureShape(feet, STICK_FIGURE.height, STICK_FIGURE.headRadius);
+      const { kind } = level.item;
+      const spot = wearPoint(figure, WEAR_SPOT[kind], itemHeight(kind, ITEMS));
+      const points = itemShape(kind, spot.x, spot.y, ITEMS).flatMap((part) => part.points);
       const left = Math.min(...points.map((p) => p.x));
       const right = Math.max(...points.map((p) => p.x));
       const highest = Math.min(...points.map((p) => p.y));

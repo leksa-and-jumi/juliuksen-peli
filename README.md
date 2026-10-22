@@ -22,9 +22,9 @@
 
 🇫🇮 Oikean yläkulman pyöreä nuoli ↻ aloittaa koko pelin alusta tasolta 1.
 
-🇬🇧 There are 10 levels. Tip: `?level=3` at the end of the address opens level 3 directly.
+🇬🇧 There are 13 levels. After level 10 you get a big golden prize 🏆, and then come the jewelry levels 💎 (necklace, ring, tiara). Tip: `?level=3` at the end of the address opens level 3 directly.
 
-🇫🇮 Tasoja on 10. Vinkki: `?level=3` osoitteen perässä avaa suoraan tason 3.
+🇫🇮 Tasoja on 13. Tason 10 jälkeen saat ison kultaisen palkinnon 🏆, ja sitten tulevat korutasot 💎 (kaulakoru, sormus, tiara). Vinkki: `?level=3` osoitteen perässä avaa suoraan tason 3.
 
 _🇬🇧 The game is just starting. Julius decides what comes next!_
 _🇫🇮 Peli on vasta alussa. Julius päättää, mitä siihen tulee!_
